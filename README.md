@@ -7,7 +7,7 @@ Download now on the [app store](https://apps.apple.com/us/app/mfms/id6743019823)
 
 ```bash
 # Clone the repo
-git clone https://github.com/prisharpatel/mfms-app.git
+git clone https://github.com/mfms-app/mfms-app.git
 
 # Navigate to cloned folder in terminal and install dependencies
 cd mfms-app
