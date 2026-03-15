@@ -7,35 +7,35 @@ import SpeakerDetails from '../speakers/SpeakerDetails'
 
 const iconHome = require('../../../assets/images/home.png');
 const iconMFMS = require('../../../assets/images/transparent_black.png');
-const iconCalendar = require('../../../assets/images/calendar.png');
-const iconTickets = require('../../../assets/images/tickets.png');
-const iconSpeakers = require('../../../assets/images/speakers.png');
+const iconSummit = require('../../../assets/images/summit.png');
+const iconProfile = require('../../../assets/images/profile.png');
+const iconPublications = require('../../../assets/images/publications.png');
 
 const tabNavigationData = [
+  {
+    name: 'MFMS',
+    component: AboutScreen,
+    icon: iconMFMS,
+  },
+  {
+    name: 'Summit',
+    component: AboutScreen,
+    icon: iconSummit,
+  },
   {
     name: 'Home',
     component: HomeScreen,
     icon: iconHome,
   },
   {
-    name: 'Schedule',
-    component: ScheduleScreen,
-    icon: iconCalendar,
-  },
-  {
-    name: 'Speakers',
-    component: SpeakersScreen,
-    icon: iconSpeakers,
-  },
-  {
-    name: 'Tickets',
-    component: TicketsScreen,
-    icon: iconTickets,
-  },
-  {
-    name: 'MFMS',
+    name: 'Publications',
     component: AboutScreen,
-    icon: iconMFMS,
+    icon: iconPublications,
+  },
+  {
+    name: 'Profile',
+    component: AboutScreen,
+    icon: iconProfile,
   },
 ];
 
