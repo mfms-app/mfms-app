@@ -1,22 +1,36 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { StyleSheet, View, ImageBackground, ScrollView, Animated, TouchableOpacity, Linking, Dimensions, Easing } from 'react-native';
+import React, {useRef } from 'react';
+import { StyleSheet, View, ScrollView, Dimensions} from 'react-native';
 import { fonts, colors } from '../../styles';
-import { Image } from 'react-native';
-import { Text } from '../../components/StyledText';
-import Icon from 'react-native-vector-icons/FontAwesome';
 import Video from 'react-native-video';
+import AppText from '../../components/Text.js';
+import ContentGrid from '../../components/ContentGrid.js';
 
-const SCREEN_WIDTH = Dimensions.get('window').width;
-
+const homeContent = [
+  {
+    id: 1,
+    image: require('../../../assets/images/recent/mfms2026.png'),
+    link: 'home'
+  },
+  {
+    id: 2,
+    image: require('../../../assets/images/recent/stitch_one.png'),
+    link: 'home'
+  },
+  {
+    id: 3,
+    image: require('../../../assets/images/recent/stitch_two.png'),
+    link: 'home'
+  },
+  {
+    id: 4,
+    image: require('../../../assets/images/recent/the_loop.png'),
+    link: 'home'
+  },
+]
 export default function HomeScreen({ navigation }) {
   const videoRef = useRef(null);
   return (
     <ScrollView style={styles.container} showsVerticalScrollIndicator={false} >
-      <ImageBackground
-        source={require('../../../assets/images/background.png')}
-        style={styles.bgImage}
-        resizeMode="cover"
-      >
         <View style={styles.videoContainer}>
             <Video
               ref={videoRef}
@@ -27,13 +41,16 @@ export default function HomeScreen({ navigation }) {
               paused={false}
               muted={true}
               playInBackground={false}
-              playWhenInactive={true}
+              playWhenInactive={false}
               onError={(error) => console.log('Video Error:', error)}
               onLoad={() => console.log('Video loaded successfully')}
               onReadyForDisplay={() => console.log('Video ready for display')}
             />
         </View>
-      </ImageBackground>
+        <AppText variant="h2" style={styles.headerTitle}>
+          Michigan Fashion Media Summit
+        </AppText>
+        <ContentGrid data={homeContent} style={styles.grid}/>
     </ScrollView>
   );
 }
@@ -42,9 +59,9 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: colors.white
   },
-  bgImage: {
-    flex: 1,
-    marginHorizontal: -20,
+  headerTitle: {
+    textAlign: 'center',
+    fontWeight: 'bold',
   },
   videoContainer: {
     width: '115%',

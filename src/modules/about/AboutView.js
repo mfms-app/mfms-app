@@ -11,7 +11,9 @@ import {
 } from 'react-native';
 import Video from 'react-native-video'; // Add back the Video import
 
-import { colors, fonts } from '../../styles';
+import { colors} from '../../styles';
+import TeamDropdown from './TeamDropdown.js';
+import teamData from '../../data/studentplanningteam.js';
 
 const AboutScreen = () => {
   // Animation values
@@ -103,7 +105,19 @@ const AboutScreen = () => {
             premier fashion and media companies.
           </Text>
 
-          
+          <Text style={styles.heading}>Our Team</Text>
+          <View style={{ gap: 10 }}>
+          <TeamDropdown title="Co-Presidents and COO" team={teamData.coPresidents} />
+          <TeamDropdown title="Creative" team={teamData.creative} />
+          <TeamDropdown title="Digital" team={teamData.digital} />
+          <TeamDropdown title="Marketing" team={teamData.marketing} />
+          <TeamDropdown title="Event Planning" team={teamData.eventPlanning} />
+          <TeamDropdown title="Social" team={teamData.social} />
+          <TeamDropdown title="Partnerships" team={teamData.partnerships} />
+          <TeamDropdown title="Finance" team={teamData.finance} />
+          <TeamDropdown title="DEI" team={teamData.dei} />
+          <TeamDropdown title="Strategic Development" team={teamData.strategicDevelopment} />
+          </View>
         </Animated.View>
 
       </ScrollView>
