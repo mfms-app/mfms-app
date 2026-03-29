@@ -30,7 +30,7 @@ export default function RNSButton(props) {
       props.small && styles.buttonSmall,
       styles.border,
       props.primary && {
-        borderColor: colors.primary,
+        borderColor: colors.blue,
       },
       props.secondary && {
         borderColor: colors.secondary,
@@ -46,7 +46,7 @@ export default function RNSButton(props) {
       styles.secondaryCaption,
       icon && styles.captionWithIcon,
       props.primary && {
-        color: colors.primary,
+        color: colors.blue,
       },
       props.secondary && {
         color: colors.secondary,
@@ -141,6 +141,7 @@ const HEIGHT_LARGE = 50;
 
 const styles = StyleSheet.create({
   container: {
+    alignSelf: 'flex-start',
     height: HEIGHT,
     // borderWidth: 1 / PixelRatio.get(),
   },
@@ -161,7 +162,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
   },
   border: {
-    borderWidth: 1,
+    borderWidth: 2,
     borderColor: 'white',
     borderRadius: 5,
   },
@@ -180,6 +181,7 @@ const styles = StyleSheet.create({
     letterSpacing: 1,
     fontSize: 15,
     fontFamily: fonts.primaryBold,
+    fontWeight: '700',
   },
   captionSmall: {
     fontSize: 12,

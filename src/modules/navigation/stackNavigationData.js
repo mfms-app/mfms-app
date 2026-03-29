@@ -2,14 +2,17 @@ import React from 'react';
 import { TouchableOpacity, Image } from 'react-native';
 
 import TabNavigator from './MainTabNavigator';
-import PartnerInfoView from '../partners/PartnerInfoView';
-import FAQInfoView from '../faq/FAQInfoView';
-import FFSInfoView from '../ffs/FfsInfoView';
-import SpeakerDetailsView from '../speakers/SpeakerDetails'
-import TicketsView from '../tickets/TicketsView';
-import ContactView from '../contact/ContactView';
+import SpeakersScreen from '../speakers/SpeakersView';
+import ScheduleViewContainer from '../schedule/ScheduleViewContainer';
+import FFSScreen from '../ffs/FfsInfoView';
+import TicketsContainer from '../tickets/TicketsViewContainer';
+import FAQPage from '../faq/FAQInfoView';
+import PartnersScreen from '../partners/PartnersInfoView';
+import SpeakerDetails from '../speakers/SpeakerDetails';
 
 import { colors, fonts } from '../../styles';
+
+const backArrowIcon = require('../../../assets/images/icons/arrow-back3x.png')
 
 const headerLeftComponent = (props) => {
   return (
@@ -21,7 +24,7 @@ const headerLeftComponent = (props) => {
       }}
     >
       <Image
-        source={require('../../../assets/images/icons/arrow-back3x.png')}
+        source={backArrowIcon}
         resizeMode="contain"
         style={{
           height: 20,
@@ -41,7 +44,7 @@ const StackNavigationData = [
     headerBackground: { source: headerBackground },
     headerTitle: () => (
       <Image
-        source={require('../../../assets/images/transparent_black.png')} 
+        source={require('../../../assets/images/transparent_blue.png')} 
         style={{
           height: 55, 
           width: 55, 
@@ -51,75 +54,47 @@ const StackNavigationData = [
     ),
   },
   {
-    name: 'Partners',
-    component: PartnerInfoView,
+    name: 'Speakers',
+    component: SpeakersScreen,
     headerLeft: headerLeftComponent,
     headerBackground: { source: headerBackground },
-    headerTitleStyle: {
-      fontFamily: fonts.primaryRegular,
-      color: colors.white,
-      fontSize: 18,
-    },
+  },
+    {
+    name: 'Schedule',
+    component: ScheduleViewContainer,
+    headerLeft: headerLeftComponent,
+    headerBackground: { source: headerBackground },
   },
   {
     name: 'FFS',
-    component: FFSInfoView,
+    component: FFSScreen,
     headerLeft: headerLeftComponent,
     headerBackground: { source: headerBackground },
-    headerTitleStyle: {
-      fontFamily: fonts.primaryRegular,
-      color: colors.white,
-      fontSize: 18,
-    },
+  },
+  {
+    name: 'Tickets',
+    component: TicketsContainer,
+    headerLeft: headerLeftComponent,
+    headerBackground: { source: headerBackground },
+  },
+  {
+    name: 'Partners',
+    component: PartnersScreen,
+    headerLeft: headerLeftComponent,
+    headerBackground: { source: headerBackground },
   },
   {
     name: 'FAQ',
-    component: FAQInfoView,
+    component: FAQPage,
     headerLeft: headerLeftComponent,
     headerBackground: { source: headerBackground },
-    headerTitleStyle: {
-      fontFamily: fonts.primaryRegular,
-      color: colors.white,
-      fontSize: 18,
-    },
   },
-
   {
     name: 'SpeakerDetails',
-    component: SpeakerDetailsView,
+    component: SpeakerDetails,
     headerLeft: headerLeftComponent,
     headerBackground: { source: headerBackground },
-    headerTitleStyle: {
-      fontFamily: fonts.primaryRegular,
-      color: colors.white,
-      fontSize: 18,
-    },
   },
-  {
-    name: 'TicketsView',
-    component: TicketsView,
-    headerLeft: headerLeftComponent,
-    headerBackground: { source: headerBackground },
-    headerTitleStyle: {
-      fontFamily: fonts.primaryRegular,
-      color: colors.white,
-      fontSize: 18,
-    },
-  },
-  {
-    name: 'Contact',
-    component: ContactView,
-    headerLeft: headerLeftComponent,
-    headerBackground: { source: headerBackground },
-    headerTitleStyle: {
-      fontFamily: fonts.primaryRegular,
-      color: colors.white,
-      fontSize: 18,
-    },
-  },
-  
-
-  
 ]
 
 export default StackNavigationData;

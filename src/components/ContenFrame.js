@@ -27,12 +27,17 @@ const ContentFrame = ({ imageSource, link }) => {
 
 const styles = StyleSheet.create({
   frame: {
-    width: 140,
-    height: 172,
+    width: 175,
+    height: 215,
     borderRadius: 12,
     borderWidth: 2,
     borderColor: colors.blue,
     overflow: "hidden",
+
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 3 },
+    shadowOpacity: 0.2,
+    shadowRadius: 4,
   },
   image: {
     width: "100%",
