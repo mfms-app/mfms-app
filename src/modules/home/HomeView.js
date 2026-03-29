@@ -9,7 +9,7 @@ const homeContent = [
   {
     id: 1,
     image: require('../../../assets/images/recent/mfms2026.png'),
-    link: 'home'
+    link: 'Summit'
   },
   {
     id: 2,
@@ -50,7 +50,7 @@ export default function HomeScreen({ navigation }) {
         <AppText variant="h2" style={styles.headerTitle}>
           Michigan Fashion Media Summit
         </AppText>
-        <ContentGrid data={homeContent} style={styles.grid}/>
+        <ContentGrid data={homeContent}/>
     </ScrollView>
   );
 }
@@ -61,7 +61,6 @@ const styles = StyleSheet.create({
   },
   headerTitle: {
     textAlign: 'center',
-    fontWeight: 'bold',
   },
   videoContainer: {
     width: '115%',

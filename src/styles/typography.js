@@ -4,18 +4,21 @@ export const typography = {
     fontFamily: fonts.primaryBold,
     fontSize: 32,
     lineHeight: 38,
+    fontWeight:'bold',
   },
 
   h2: {
     fontFamily: fonts.primaryBold,
     fontSize: 24,
     lineHeight: 30,
+    fontWeight: 'bold',
   },
 
   h3: {
     fontFamily: fonts.primaryBold,
-    fontSize: 20,
+    fontSize: 17,
     lineHeight: 26,
+    fontWeight: '600',
   },
 
   body: {

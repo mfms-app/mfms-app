@@ -14,6 +14,7 @@ import Video from 'react-native-video'; // Add back the Video import
 import { colors} from '../../styles';
 import TeamDropdown from './TeamDropdown.js';
 import teamData from '../../data/studentplanningteam.js';
+import AppText from '../../components/Text.js';
 
 const AboutScreen = () => {
   // Animation values
@@ -50,7 +51,7 @@ const AboutScreen = () => {
     <SafeAreaView style={styles.safeArea}>
         {/* Header Section */}
         <View style={styles.section}>
-          <Text style={styles.title}>Who We Are</Text>
+          <AppText style={styles.title} variant='h1'>Who We Are</AppText>
           <View style={styles.divider} />
         </View>
 
@@ -78,34 +79,42 @@ const AboutScreen = () => {
           </View>
 
           {/* About Us Content */}
-          <Text style={styles.heading}>Our Story</Text>
-          <Text style={styles.description}>
+          <AppText style={styles.heading} variant='h2'>
+            Our Story
+          </AppText>
+          <AppText style={styles.description} variant='body'>
             We are a student-led organization established in 2018 to provide opportunities 
             for students aspiring to careers in fashion and media. The MFMS was founded to 
             connect the "leaders and best" to a multitude of career options in these fields. 
             Our objective remains to help shape the future fabric of fashion through greater 
             exposure to the experiences and opportunities available.
-          </Text>
+          </AppText>
           
         
-          <Text style={styles.heading}>Our Summit</Text>
-          <Text style={styles.description}>
+          <AppText style={styles.heading} variant='h2'>
+            Our Summit
+          </AppText>
+          <AppText style={styles.description} variant='body'>
             The Michigan Fashion Media Summit is an annual day-long event in the Ross 
             School of Business that connects students with industry leaders. Our conference 
             comprises keynote conversations, collaborative panel discussions, exclusive 
             networking events, and skill-building workshops. The event concludes with the 
             Fashion Forward Showcase, our initiative to highlight emerging, nationwide 
             student designers.
-          </Text>
+          </AppText>
 
-          <Text style={styles.heading}>Our Mission</Text>
-          <Text style={styles.description}>
+          <AppText style={styles.heading} variant='h2'>
+            Our Mission
+          </AppText>
+          <AppText style={styles.description} variant='body'>
             To inspire and educate the next generation of industry leaders, while forging 
             valuable connections between the University of Michigan's top talent and 
             premier fashion and media companies.
-          </Text>
+          </AppText>
 
-          <Text style={styles.heading}>Our Team</Text>
+          <AppText style={styles.heading} variant='h2'>
+            Our Team
+          </AppText>
           <View style={{ gap: 10 }}>
           <TeamDropdown title="Co-Presidents and COO" team={teamData.coPresidents} />
           <TeamDropdown title="Creative" team={teamData.creative} />
@@ -128,9 +137,6 @@ const AboutScreen = () => {
 const styles = StyleSheet.create({
   title:{
     marginTop: 25,
-    fontFamily: "NeueHaasDisplayRoman",
-    fontSize: 36,
-    fontWeight: '600', //semi-bold
     textAlign: 'center',
     color: colors.black,
     marginHorizontal: 20,
@@ -187,16 +193,10 @@ const styles = StyleSheet.create({
     paddingTop: 20,
   },
   heading: {
-    fontSize: 22,
-    fontFamily: "NeueHaasDisplayRoman",
-    fontWeight: 'bold',
     marginBottom: 10,
     color: colors.blue,
   },
   description: {
-    fontSize: 16,
-    fontFamily: "NeueHaasDisplayRoman",
-    lineHeight: 22,
     color: colors.gray || '#555',
     marginBottom: 20,
   },

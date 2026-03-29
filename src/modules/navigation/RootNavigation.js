@@ -16,12 +16,12 @@ export default function NavigatorView(props) {
           name={item.name} 
           component={item.component} 
           options={{
-            headerLeft: null,
+            headerLeft: item.headerLeft ? (headerProps) => item.headerLeft(headerProps) : undefined,
             headerBackground: () => (
               <Image style={styles.headerImage} source={item.headerBackground.source} />
             ),
-            headerTitle: item.headerTitle ? item.headerTitle : undefined,
-            headerTitleStyle: item.headerTitleStyle ? item.headerTitleStyle : undefined,
+            headerTitle: item.headerTitle ? item.headerTitle : null,
+            headerTitleStyle: item.headerTitleStyle ? item.headerTitleStyle : null,
           }} 
         />
       ))}

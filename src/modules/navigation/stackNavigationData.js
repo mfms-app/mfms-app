@@ -2,8 +2,17 @@ import React from 'react';
 import { TouchableOpacity, Image } from 'react-native';
 
 import TabNavigator from './MainTabNavigator';
+import SpeakersScreen from '../speakers/SpeakersView';
+import ScheduleViewContainer from '../schedule/ScheduleViewContainer';
+import FFSScreen from '../ffs/FfsInfoView';
+import TicketsContainer from '../tickets/TicketsViewContainer';
+import FAQPage from '../faq/FAQInfoView';
+import PartnersScreen from '../partners/PartnersInfoView';
+import SpeakerDetails from '../speakers/SpeakerDetails';
 
 import { colors, fonts } from '../../styles';
+
+const backArrowIcon = require('../../../assets/images/icons/arrow-back3x.png')
 
 const headerLeftComponent = (props) => {
   return (
@@ -15,7 +24,7 @@ const headerLeftComponent = (props) => {
       }}
     >
       <Image
-        source={require('../../../assets/images/icons/arrow-back3x.png')}
+        source={backArrowIcon}
         resizeMode="contain"
         style={{
           height: 20,
@@ -43,6 +52,48 @@ const StackNavigationData = [
         }}
       />
     ),
+  },
+  {
+    name: 'Speakers',
+    component: SpeakersScreen,
+    headerLeft: headerLeftComponent,
+    headerBackground: { source: headerBackground },
+  },
+    {
+    name: 'Schedule',
+    component: ScheduleViewContainer,
+    headerLeft: headerLeftComponent,
+    headerBackground: { source: headerBackground },
+  },
+  {
+    name: 'FFS',
+    component: FFSScreen,
+    headerLeft: headerLeftComponent,
+    headerBackground: { source: headerBackground },
+  },
+  {
+    name: 'Tickets',
+    component: TicketsContainer,
+    headerLeft: headerLeftComponent,
+    headerBackground: { source: headerBackground },
+  },
+  {
+    name: 'Partners',
+    component: PartnersScreen,
+    headerLeft: headerLeftComponent,
+    headerBackground: { source: headerBackground },
+  },
+  {
+    name: 'FAQ',
+    component: FAQPage,
+    headerLeft: headerLeftComponent,
+    headerBackground: { source: headerBackground },
+  },
+  {
+    name: 'SpeakerDetails',
+    component: SpeakerDetails,
+    headerLeft: headerLeftComponent,
+    headerBackground: { source: headerBackground },
   },
 ]
 

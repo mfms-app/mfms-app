@@ -12,7 +12,7 @@ export default function BottomTabs() {
     <Tab.Navigator tabBarOptions={{style: styles.tabBarContainer}} initialRouteName="Home">
       {tabNavigationData.map((item, idx) => (
         <Tab.Screen 
-          key={`tab_item${idx+1}`}v
+          key={`tab_item${idx+1}`}
           name={item.name}
           component={item.component}
           options={{

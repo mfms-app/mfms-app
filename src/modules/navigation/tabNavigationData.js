@@ -1,9 +1,6 @@
 import HomeScreen from '../home/HomeViewContainer';
-import ScheduleScreen from '../schedule/ScheduleViewContainer';
+import SummitScreen from '../summit/SummitView';
 import AboutScreen from '../about/AboutViewContainer';
-import SpeakersScreen from '../speakers/SpeakersViewContainer';
-import TicketsScreen from '../tickets/TicketsViewContainer';
-import SpeakerDetails from '../speakers/SpeakerDetails'
 
 const iconHome = require('../../../assets/images/home.png');
 const iconMFMS = require('../../../assets/images/transparent_black.png');
@@ -19,7 +16,7 @@ const tabNavigationData = [
   },
   {
     name: 'Summit',
-    component: AboutScreen,
+    component: SummitScreen,
     icon: iconSummit,
   },
   {

@@ -9,8 +9,7 @@ import {
   Linking,
 } from "react-native";
 import { colors } from "../../styles";
-import border from "victory-native/lib/components/victory-primitives/border";
-
+import AppText from "../../components/Text";
 export default function TeamDropdown({ title, team }) {
   const [open, setOpen] = useState(false);
 
@@ -27,8 +26,12 @@ export default function TeamDropdown({ title, team }) {
         <Image source={{ uri: item.photo }} style={styles.photo} />
       </View>
 
-      <Text style={styles.name}>{item.name}</Text>
-      <Text style={styles.title}>{item.title}</Text>
+      <AppText variant='body' style={styles.name}>
+        {item.name}
+      </AppText>
+      <AppText variant='caption' style={styles.title}>
+        {item.title}
+      </AppText>
     </Pressable>
   );
 
@@ -36,7 +39,9 @@ export default function TeamDropdown({ title, team }) {
     <View style={styles.container}>
       {/* Header */}
       <Pressable style={styles.header} onPress={toggle}>
-        <Text style={styles.headerText}>{title}</Text>
+        <AppText variant='h3' style={styles.headerText}>
+          {title}
+        </AppText>
 
         <Text style={[styles.arrow, open && styles.arrowOpen]}>
           ▼
@@ -77,8 +82,6 @@ const styles = StyleSheet.create({
   },
 
   headerText: {
-    fontSize: 18,
-    fontWeight: "600",
     letterSpacing: 1,
   },
 
@@ -115,14 +118,12 @@ const styles = StyleSheet.create({
     alignSelf: "flex-start", // anchor image to the top
 },
   name: {
-    fontSize: 16,
-    fontWeight: "700",
+    fontWeight: "bold",
     color: colors.black,
     textAlign: "center",
-},
+    },
 
   title: {
-    fontSize: 14,
     color: colors.black,
     textAlign: "center",
   },
