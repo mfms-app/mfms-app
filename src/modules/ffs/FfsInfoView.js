@@ -3,7 +3,6 @@ import {
   StyleSheet,
   View,
   TouchableOpacity,
-  ImageBackground,
   Image,
   FlatList,
   Animated,
@@ -15,7 +14,8 @@ import { colors } from '../../styles';
 import { Text } from '../../components/StyledText';
 import { ScrollView } from 'react-native-gesture-handler';
 import Icon from 'react-native-vector-icons/FontAwesome';
-
+import AppText from '../../components/Text';
+import RNSButton from '../../components/Button';
 
 const images = [
   { id: '1', source: require('../../../assets/images/ffs/ffs1.png')},
@@ -28,6 +28,7 @@ const images = [
 
 const SCREEN_WIDTH = Dimensions.get('window').width;
 
+// TODO: Replace finalists
 const finalists = [
   { id: '1', name: 'Adelina Akhmetshina', source: require('../../../assets/images/ffs/Adelina.jpg')},
   { id: '2', name: 'Eden Meidl', source: require('../../../assets/images/ffs/Eden.jpg') },
@@ -38,9 +39,7 @@ const finalists = [
 ]
 
 export default function FFSScreen({ isExtended, setIsExtended }) {
-  const [showAbout, setShowAbout] = useState(false);
   const [slideAnim1] = useState(new Animated.Value(-300)); // Animation for "CURRENTLY"
-  const REPEATING_TEXT_1 = Array(1000).fill('Leaders • Creators • Visionaries • Designers • Pioneers • ');
   const [currentFinalistIndex, setCurrentFinalistIndex] = useState(0);
   const finalistFadeAnim = useRef(new Animated.Value(1)).current;
   
@@ -91,67 +90,18 @@ export default function FFSScreen({ isExtended, setIsExtended }) {
 
   return (
     <ScrollView contentContainerStyle={{ flexGrow: 1, backgroundColor: colors.white }}>
-      <Text style={styles.title} >Fashion Forward Showcase</Text>
-      <Text size={10}></Text>
-      <Text style={styles.title2}>Presented by Steve Madden</Text>
+      <View style={styles.textContainer}>
+      <AppText style={styles.text} variant='h1'>Fashion Forward Showcase</AppText>
+      <View style={styles.divider} />
+      <AppText style={styles.text} variant='body'>Presented by Steve Madden</AppText>
+      <Image source={require('../../../assets/images/ffs_logo.png')} style={styles.logo} />
+      <AppText style={styles.text} variant='body'>The MFMS Fashion Forward Showcase highlights college students at the University of Michigan and nationwide who are innovating in fashion and media—whether by building brands, creating content, or growing a media presence. </AppText>
+      </View>
 
-      <View style={styles.aboutContainer}>
-      {!showAbout ? (
-        <View style={styles.logoContainer}>
-          <TouchableOpacity onPress={() => setShowAbout(true)} style={styles.button}>
-            <Text style={styles.buttonText}>About →</Text>
-          </TouchableOpacity>
-          <Image source={require('../../../assets/images/ffs_logo.png')} style={styles.logo} />
-        </View>
-      ) : (
-        <View style={styles.textContainer}>
-          <TouchableOpacity onPress={() => setShowAbout(false)} style={styles.button}>
-            <Text style={styles.buttonText}>About ↓</Text>
-          </TouchableOpacity>
-          <Text style={styles.aboutText}>
-            The MFMS Fashion Forward Showcase recognizes college students at U of M and 
-            across the country who are innovators and entrepreneurs in the fashion and media 
-            worlds. From those who are fashion-forward in their pursuits 
-            to those who are already making strides to be members of the next generation of 
-            fashion industry leaders, MFMS provides a platform to recognize all.
-          </Text>
-        </View>
-      )}
-    </View>
-    
-    <FlatList
-      nestedScrollEnabled={true}
-      scrollEnabled={false}
-      data={images}
-      keyExtractor={(item) => item.id}
-      numColumns={3}
-      renderItem={({ item }) => (
-        <View style={styles.imageContainer}>
-          <Image source={item.source} style={styles.image} />
-        </View>
-      )}
-      contentContainerStyle={styles.gallery}
-    />
-
-    <View style={styles.slidingContainer}>
-      <Animated.View 
-        style={[
-          styles.slidingStream, 
-          { transform: [{ translateX: slideAnim1 }] }
-        ]}
-      >
-        <Text style={styles.slidingText}>{REPEATING_TEXT_1}</Text>
-        <Text style={styles.slidingText}>{REPEATING_TEXT_1}</Text>
-      </Animated.View>
-    </View>
-
-    <Text style={styles.bottomtext}>Five finalists will present their work at the Michigan Fashion Media Summit before top industry leaders. One winner will receive an exclusive 
-    professional development opportunity wih our presenting sponsor Steve Madden. The FFS is a career-defining platform for student creatives to gain exposure and connections.</Text>
-    
-    <View style={styles.divider} />
-    <Text style={styles.title}>2025 Finalists</Text>
-
-    {/* New Carousel UI */}
+      {/* Finalists */}
+      <View style={styles.finalistContainer}>
+      <AppText style={styles.text} variant='h2'>2026 Finalists</AppText>
+          {/* New Carousel UI */}
     <View style={styles.carouselContainer}>
         {/* Left navigation button */}
         <TouchableOpacity 
@@ -196,28 +146,32 @@ export default function FFSScreen({ isExtended, setIsExtended }) {
           />
         ))}
       </View>
-
-      <TouchableOpacity 
-        style={styles.learnMoreButton}
-        onPress={() => {
-          // Open the website URL
-          const url = 'https://www.michiganfashionmediasummit.com/fashion-forward-showcase';
-          Linking.canOpenURL(url)
-            .then((supported) => {
-              if (supported) {
-                return Linking.openURL(url);
-              } else {
-                console.log("Don't know how to open URI: " + url);
-                // Fallback for when URL scheme is not supported
-                alert("Could not open the webpage. Please visit michiganfashionmediasummit.com for more information.");
-              }
-            })
-            .catch((err) => console.error('An error occurred', err));
-        }}
-      >
-        <Text style={styles.learnMoreText}>Learn More</Text>
-      </TouchableOpacity>
       
+      <View style={styles.button}>
+      <RNSButton
+        caption="Learn More"
+        bordered
+        primary
+        onPress={() => Linking.openURL('https://www.michiganfashionmediasummit.com/fashion-forward-showcase')}
+      />
+      </View>
+      </View>
+    <View style={styles.textContainer}>
+    <AppText style={styles.text} variant='body'>The finalists will present at the Michigan Fashion Media Summit before industry leaders, with one winner receiving an exclusive professional development opportunity. The showcase offers student creatives a major platform for exposure, networking, and career advancement.</AppText>
+    </View>
+      <FlatList
+      nestedScrollEnabled={true}
+      scrollEnabled={false}
+      data={images}
+      keyExtractor={(item) => item.id}
+      numColumns={3}
+      renderItem={({ item }) => (
+        <View style={styles.imageContainer}>
+          <Image source={item.source} style={styles.image} />
+        </View>
+      )}
+      contentContainerStyle={styles.gallery}
+    />
     </ScrollView>
 
   );
@@ -228,14 +182,16 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: colors.white
   },
-  title:{
-    color: colors.black,
-    fontWeight: 'bold', 
-    marginHorizontal: SCREEN_WIDTH*.05,
-    alignSelf: 'center',
-    fontSize: 25,
-    marginTop: 20,
-    fontFamily: "NeueHaasDisplayRoman",
+  text:{
+    textAlign: 'center',
+  },
+  textContainer:{
+    paddingHorizontal: 20,
+    gap: 10,
+  },
+  finalistContainer:{
+    gap: 10,
+    marginTop: 40,
   },
   divider: {
     width: '90%', 
@@ -243,45 +199,14 @@ const styles = StyleSheet.create({
     height: 1, 
     backgroundColor: colors.black,  
   },
-  title2:{
-    color: colors.black,
-    fontStyle: 'italic', 
-    marginHorizontal: SCREEN_WIDTH*.05,
-    alignSelf: 'center',
-    fontSize: 20,
-    fontFamily: "Arial",
-  },
-  logoContainer:{
-    marginTop: 40,
-    marginHorizontal: SCREEN_WIDTH * 0.001,
-  },
   logo :{
-    width: 227,
-    height: 124,
+    width: 350,
+    height: 200,
     alignSelf: 'center',
-    marginTop: 20
   },
   button:{
-    marginLeft: SCREEN_WIDTH * 0.06,
-  },
-  textContainer:{
-    marginTop: 40
-  },
-  buttonText:{
-    color: colors.black,
-    fontSize: 20,
-  },
-  aboutContainer:{
-    marginVertical: 2,
-    marginHorizontal: SCREEN_WIDTH * 0.01,
-  },
-  aboutText:{
     alignSelf: 'center',
-    marginTop: 20,
-    marginHorizontal: SCREEN_WIDTH * 0.06,
-    fontSize: 20,
-    fontFamily: "NeueHaasDisplayRoman",
-    color: colors.black,
+    marginBottom: 40,
   },
   gallery:{
     alignSelf: 'center',
@@ -291,31 +216,6 @@ const styles = StyleSheet.create({
     alignContent:'center',
     marginLeft: 7,
     marginRight: 7
-  },
-  bottomtext:{
-    fontFamily: "NeueHaasDisplayRoman",
-    textAlign: 'center',
-    marginHorizontal: SCREEN_WIDTH * 0.06,
-    marginBottom: 30,
-    color: colors.black,
-    fontSize: 16.5
-  },
-  slidingContainer: {
-    width: SCREEN_WIDTH*2,
-    overflow: 'hidden',
-    height: 26,
-    marginVertical: 30,
-  },
-  slidingStream: {
-    flexDirection: 'row',
-    position: 'absolute',
-    width: SCREEN_WIDTH * 100,
-  },
-  slidingText: {
-    fontSize: 20,
-    fontFamily: "Times New Roman",
-    color: colors.blue,
-    fontStyle: 'italic',
   },
   carouselContainer: {
     flexDirection: 'row',
@@ -372,21 +272,5 @@ const styles = StyleSheet.create({
     width: 10,
     height: 10,
     borderRadius: 5,
-  },
-  learnMoreButton: {
-    backgroundColor: colors.blue,
-    paddingVertical: 12,
-    paddingHorizontal: 30,
-    borderRadius: 25,
-    alignSelf: 'center',
-    marginTop: 10,
-    marginBottom: 40,
-  },
-  learnMoreText: {
-    fontFamily: "NeueHaasDisplayRoman",
-    fontSize: 18,
-    fontWeight: '600',
-    color: colors.white,
-    textAlign: 'center',
   },
 });
