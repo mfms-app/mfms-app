@@ -65,9 +65,9 @@ const SummitScreen = () => {
             onPress={() => navigation.navigate('Tickets')}
         />
         </View>
-        <AppText style={styles.text} variant='h3'>Summit Dashboard</AppText>
+        <AppText style={styles.text} variant='h2'>Summit Dashboard</AppText>
         <ContentGrid data={summitDashContent}/>
-        <AppText style={styles.text} variant='h3'>Additional Resources</AppText>
+        <AppText style={styles.text} variant='h2'>Additional Resources</AppText>
         <View style={styles.buttonRow}>
           <RNSButton
             caption="Partners"

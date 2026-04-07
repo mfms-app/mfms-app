@@ -214,8 +214,9 @@ const styles = StyleSheet.create({
   },
   imageContainer:{
     alignContent:'center',
-    marginLeft: 7,
-    marginRight: 7
+    marginLeft: 10,
+    marginRight: 10,
+    marginBottom: 40, 
   },
   carouselContainer: {
     flexDirection: 'row',

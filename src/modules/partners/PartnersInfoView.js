@@ -1,163 +1,342 @@
 import React from 'react';
 import {
   StyleSheet,
+  SafeAreaView,
+  ScrollView,
   View,
   TouchableOpacity,
-  ImageBackground,
   Image,
-  FlatList
+  FlatList,
+  Linking,
+  Dimensions
 } from 'react-native';
 
-import { fonts, colors } from '../../styles';
-import { Text } from '../../components/StyledText';
+import {colors } from '../../styles';
+import AppText from '../../components/Text';
+import RNSButton from '../../components/Button';
+import { useNavigation } from '@react-navigation/native';
 
-export default function PartnerScreen({ isExtended, setIsExtended }) {
-  const partners = [
-    // { id: '1', name: 'Steve Madden', logo: require('../../../assets/images/partners/steve_madden.png') },
-    { id: '2', name: 'Instyle', logo: require('../../../assets/images/partners/instyle.png') },
-    { id: '3', name: 'Shopify', logo: require('../../../assets/images/partners/shopify.png') },
-    { id: '4', name: 'Dairy Boy', logo: require('../../../assets/images/partners/dairy_boy.png')},
-    { id: '47', name: 'Wolverine Worldwide', logo: require('../../../assets/images/partners/wolverine_worldwide.png')},
-    { id: '48', name: 'Adobe', logo: require('../../../assets/images/partners/adobe.png')},
-    { id: '5', name: 'LVMH', logo: require('../../../assets/images/partners/LVMH.png') },
-    { id: '6', name: 'Louis Vuitton', logo: require('../../../assets/images/partners/louis_vuitton.png') },
-    { id: '7', name: 'Dior', logo: require('../../../assets/images/partners/dior.png') },
-    { id: '8', name: 'Tiffany & Co', logo: require('../../../assets/images/partners/tiffany&co.png') },
-    { id: '10', name: 'Sweetgreen', logo: require('../../../assets/images/partners/sweetgreen.png') },
-    { id: '11', name: 'Uniqlo', logo: require('../../../assets/images/partners/uniqlo-red.png') },
-    { id: '12', name: 'Lands End', logo: require('../../../assets/images/partners/lands_end.png') },
-    { id: '13', name: 'Tarte', logo: require('../../../assets/images/partners/tarte.png') },
-    { id: '14', name: 'Lancome', logo: require('../../../assets/images/partners/lancome.png') },
-    { id: '15', name: 'Loreal', logo: require('../../../assets/images/partners/loreal.png') },
-    { id: '16', name: 'Skin Ella Rose', logo: require('../../../assets/images/partners/skinellarose.png') },
-    { id: '17', name: 'Smart Sweets', logo: require('../../../assets/images/partners/smart-sweets.png') },
-    // { id: '18', name: '818', logo: require('../../../assets/images/partners/818.png') },
-    // { id: '19', name: 'Sprinter', logo: require('../../../assets/images/partners/sprinter.png') },
-    { id: '20', name: 'Michgrads', logo: require('../../../assets/images/partners/michgrads.png') },
-    { id: '21', name: 'Poppi', logo: require('../../../assets/images/partners/poppi.png') },
-    { id: '22', name: 'Vegobears', logo: require('../../../assets/images/partners/vegobears.png') },
-    { id: '23', name: 'Happy Coffee', logo: require('../../../assets/images/partners/happy.png') },
-    { id: '24', name: 'Thrifted University', logo: require('../../../assets/images/partners/thrifted_university.png') },
-    { id: '25', name: 'Simply Gum', logo: require('../../../assets/images/partners/simply.png') },
-    { id: '26', name: 'Skinny Dipped', logo: require('../../../assets/images/partners/skinny-dipped.png') },
-    { id: '27', name: 'Cinnaholic', logo: require('../../../assets/images/partners/cinnaholic.png') },
-    { id: '28', name: 'Vivrelle', logo: require('../../../assets/images/partners/vivrelle.png') },
-    { id: '29', name: 'Bivouac', logo: require('../../../assets/images/partners/bivouac.jpg') },
-    { id: '30', name: 'Gracious MFG', logo: require('../../../assets/images/partners/gracious_mfg.png') },
-    { id: '31', name: 'Intelligent Change', logo: require('../../../assets/images/partners/intelligent_change.png') },
-    { id: '32', name: 'Sml Wld Coffee', logo: require('../../../assets/images/partners/sml-wrld.png') },
-    { id: '33', name: 'Go Puff', logo: require('../../../assets/images/partners/gopuff.png') },
-    { id: '34', name: 'Parlux', logo: require('../../../assets/images/partners/parlux.png') },
-    { id: '35', name: 'Realsy', logo: require('../../../assets/images/partners/realsy.png') },
-    { id: '36', name: 'Lovebird', logo: require('../../../assets/images/partners/lovebird.png') },
-    { id: '37', name: 'Unwell', logo: require('../../../assets/images/partners/unwell.png') },
-    { id: '38', name: 'Vacation', logo: require('../../../assets/images/partners/vacation.png') },
-    { id: '39', name: 'Heaven Mayhem', logo: require('../../../assets/images/partners/heaven_mayhem.png') },
-    { id: '40', name: 'Robs Popcorn', logo: require('../../../assets/images/partners/robs_popcorn.png') },
-    { id: '41', name: 'Malk', logo: require('../../../assets/images/partners/malk.png') },
-    { id: '42', name: 'Wildflower', logo: require('../../../assets/images/partners/wildflower.png') },
-    { id: '43', name: 'Essie', logo: require('../../../assets/images/partners/essie.png') },
-    { id: '44', name: 'Peachlab', logo: require('../../../assets/images/partners/peachlab2.png') },
-    { id: '49', name: 'Earths Splendor', logo: require('../../../assets/images/partners/earths_splendor.png') },
-    { id: '50', name: 'John Frieda', logo: require('../../../assets/images/partners/JohnFriedaLogo.png') },
-    { id: '51', name: 'Biore', logo: require('../../../assets/images/partners/biore.png') },
-    { id: '52', name: 'Color WOW', logo: require('../../../assets/images/partners/color_wow.png') },
-    { id: '53', name: 'Pharmaceris', logo: require('../../../assets/images/partners/Pharmaceris.png') },
-    { id: '54', name: 'Juice Plus', logo: require('../../../assets/images/partners/Juice_Plus.jpg') },
-    { id: '55', name: 'Hello Sunday', logo: require('../../../assets/images/partners/hello_sunday.png') },
-    { id: '46', name: 'SPARC', logo: require('../../../assets/images/partners/sparc.png') },
-  ]
+const numColumns = 3;
+const screenWidth = Dimensions.get('window').width;
+const imageSize = screenWidth / numColumns - 20;
+
+const presentingPartner = {
+  id: '1',
+  name: 'Steve Madden',
+  logo: require('../../../assets/images/partners/stevemadden_logo.png'),
+  link: 'https://www.stevemadden.com/'
+};
+
+const partners = [
+  {
+    name: 'Saint James',
+    logo: require('../../../assets/images/partners/saintjames_logo.png'),
+    link: 'https://saintjamesicedtea.com/'
+  },
+  {
+    name: 'Adobe',
+    logo: require('../../../assets/images/partners/adobe_logo.png'),
+    link: 'https://www.adobe.com'
+  },
+  {
+    name: 'Balenciaga',
+    logo: require('../../../assets/images/partners/balenciaga_logo.png'),
+    link: 'https://www.balenciaga.com'
+  },
+  {
+    name: 'Bloomingdales',
+    logo: require('../../../assets/images/partners/bloomingdales_logo.png'),
+    link: 'https://www.bloomingdales.com'
+  },
+  {
+    name: 'Catalyst Brands',
+    logo: require('../../../assets/images/partners/catalystbrands_logo.png'),
+    link: 'https://catalystbrands.com'
+  },
+  {
+    name: 'Danielle & Alix',
+    logo: require('../../../assets/images/partners/danielle&alix_logo.png'),
+    link: 'https://www.danielleandalix.com'
+  },
+  {
+    name: 'Nike',
+    logo: require('../../../assets/images/partners/nike_logo.png'),
+    link: 'https://www.nike.com'
+  },
+  {
+    name: 'Shopbop',
+    logo: require('../../../assets/images/partners/shopbop_logo.png'),
+    link: 'https://www.shopbop.com'
+  },
+  {
+    name: 'WME',
+    logo: require('../../../assets/images/partners/wme_logo.png'),
+    link: 'https://www.wmeagency.com'
+  },
+  {
+    name: 'Loft',
+    logo: require('../../../assets/images/partners/loft_logo.png'),
+    link: 'https://www.loft.com'
+  },
+  {
+    name: 'Alice',
+    logo: require('../../../assets/images/partners/alice_logo.png'),
+    link: 'https://www.alicemushrooms.com'
+  },
+  {
+    name: 'Arrae',
+    logo: require('../../../assets/images/partners/arrae_logo.png'),
+    link: 'https://www.arrae.com'
+  },
+  {
+    name: 'AshleyGold',
+    logo: require('../../../assets/images/partners/ashleygold_logo.png'),
+    link: 'https://ashleygold.com'
+  },
+  {
+    name: 'Bloom Nutrition',
+    logo: require('../../../assets/images/partners/bloomnutrition_logo.png'),
+    link: 'https://bloomnu.com'
+  },
+  {
+    name: 'Bombas',
+    logo: require('../../../assets/images/partners/bombas_logo.png'),
+    link: 'https://bombas.com'
+  },
+  {
+    name: 'BonBonBon',
+    logo: require('../../../assets/images/partners/bbb_logo.png'),
+    link: 'https://bonbonbon.com'
+  },
+  {
+    name: 'UF1',
+    logo: require('../../../assets/images/partners/uf1_logo.png'),
+    link: 'https://www.corecollectivea2.com/'
+  },
+  {
+    name: 'Dagne Dover',
+    logo: require('../../../assets/images/partners/dagnedover_logo.png'),
+    link: 'https://www.dagnedover.com'
+  },
+  {
+    name: 'Double Soul',
+    logo: require('../../../assets/images/partners/doublesoul_logo.png'),
+    link: 'https://doublesoul.co'
+  },
+  {
+    name: '818',
+    logo: require('../../../assets/images/partners/818_logo.png'),
+    link: 'https://drink818.com'
+  },
+  {
+    name: 'Haus Labs',
+    logo: require('../../../assets/images/partners/hauslabs_logo.png'),
+    link: 'https://www.hauslabs.com'
+  },
+  {
+    name: 'Intelligent Change',
+    logo: require('../../../assets/images/partners/intelligentchange_logo.png'),
+    link: 'https://www.intelligentchange.com'
+  },
+  {
+    name: 'Khloud',
+    logo: require('../../../assets/images/partners/khloud_logo.png'),
+    link: 'https://khloudfoods.com'
+  },
+  {
+    name: 'LOreal',
+    logo: require('../../../assets/images/partners/loreal_logo.png'),
+    link: 'https://www.loreal.com'
+  },
+  {
+    name: 'Lands End',
+    logo: require('../../../assets/images/partners/landsend_logo.png'),
+    link: 'https://www.landsend.com'
+  },
+  {
+    name: 'Lovebird',
+    logo: require('../../../assets/images/partners/lovebird_logo.png'),
+    link: 'https://lovebirdfoods.com'
+  },
+  {
+    name: 'Neuro Gum',
+    logo: require('../../../assets/images/partners/neurogum_logo.png'),
+    link: 'https://neurogum.com'
+  },
+  {
+    name: 'Odele',
+    logo: require('../../../assets/images/partners/odele_logo.png'),
+    link: 'https://odelebeauty.com'
+  },
+  {
+    name: 'Parke',
+    logo: require('../../../assets/images/partners/parke_logo.png'),
+    link: 'https://shopparke.com'
+  },
+  {
+    name: 'Parlux',
+    logo: require('../../../assets/images/partners/parlux_logo.png'),
+    link: 'https://www.parlux.com'
+  },
+  {
+    name: 'Poppi',
+    logo: require('../../../assets/images/partners/poppi_logo.png'),
+    link: 'https://www.drinkpoppi.com'
+  },
+  {
+    name: 'Roos Roast',
+    logo: require('../../../assets/images/partners/roosroast_logo.png'),
+    link: 'https://www.roosroast.com'
+  },
+  {
+    name: 'Tarte',
+    logo: require('../../../assets/images/partners/tarte_logo.png'),
+    link: 'https://tartecosmetics.com'
+  },
+  {
+    name: 'Touchland',
+    logo: require('../../../assets/images/partners/touchland_logo.png'),
+    link: 'https://touchland.com'
+  },
+  {
+    name: 'Vegobears',
+    logo: require('../../../assets/images/partners/vegobears_logo.png'),
+    link: 'https://vegobears.com'
+  },
+  {
+    name: 'SoulCycle',
+    logo: require('../../../assets/images/partners/soulcycle_logo.png'),
+    link: 'https://www.soul-cycle.com'
+  },
+  {
+    name: 'Bivouac',
+    logo: require('../../../assets/images/partners/bivouac_logo.png'),
+    link: 'https://www.bivouacannarbor.com'
+  },
+  {
+    name: 'Vivrelle',
+    logo: require('../../../assets/images/partners/vivrelle_logo.png'),
+    link: 'https://www.vivrelle.com'
+  }
+];
+
+const PartnerCollage = () => {
+  const handlePress = async (url) => {
+    const supported = await Linking.canOpenURL(url);
+    if (supported) {
+      await Linking.openURL(url);
+    } else {
+      console.log(`Don't know how to open this URL: ${url}`);
+    }
+  };
+
+  const renderItem = ({ item }) => (
+    <TouchableOpacity 
+      style={styles.itemContainer} 
+      onPress={() => handlePress(item.link)}
+    >
+      <Image 
+        source={item.logo} 
+        style={styles.logo} 
+        resizeMode="contain" 
+      />
+    </TouchableOpacity>
+  );
 
   return (
-    
     <View style={styles.container}>
-      <ImageBackground
-        source={require('../../../assets/images/background.png')}
-        style={styles.bgImage}
-        resizeMode="cover"
-      >
-
-<View style={styles.logoContainer}>
-          <Image
-            source={require('../../../assets/images/transparent_black.png')}
-            style={styles.logo}
-            resizeMode="contain"
-          />
-          <Text size={10} black style={styles.header}> </Text>
-          
-        </View>
-        
-        <FlatList
-          data={partners}
-          keyExtractor={(item) => item.id}
-          showsVerticalScrollIndicator={true}
-          contentContainerStyle={styles.listContainer}
-          ListHeaderComponent={
-            <View style={styles.headerContainer}>
-              <Text size={25} black style={styles.header}>Presented by:</Text>
-              <View style={styles.partnerItem}>
-                <Image source={require('../../../assets/images/partners/steve_madden.png')} style={styles.partnerLogo} resizeMode="contain" />
-              </View>
-              <View style={styles.divider} />
-              {/* <Text size={25} black style={styles.header}>Partners:</Text> */}
-            </View>
-          }
-          renderItem={({ item }) => (
-            <View style={styles.partnerItem}>
-              <Image source={item.logo} style={styles.partnerLogo} resizeMode="contain" />
-            </View>
-          )}
-        />
-
-      </ImageBackground>
+      <FlatList
+        data={partners}
+        renderItem={renderItem}
+        keyExtractor={(item) => item.name}
+        numColumns={numColumns}
+        contentContainerStyle={styles.listPadding}
+      />
     </View>
+  );
+};
+
+export default function PartnerScreen() {
+  const navigation = useNavigation();
+  return (
+    <SafeAreaView style={styles.safeArea}> 
+    <ScrollView 
+    contentContainerStyle={styles.scrollView}
+    showsVerticalScrollIndicator={false}> 
+       {/* Header Section */}
+         <AppText style={styles.text} variant='h1'>Partners</AppText>
+         <View style={styles.divider} />
+         <AppText style={styles.text} variant='h2'>Presented By:</AppText>
+
+         {/* Steve Madden Logo */}
+         <Image source={presentingPartner.logo} style={styles.partnerLogo}/>
+
+         {/* Partner Collage */}
+         <AppText style={styles.text} variant='body'>Click on our partners to learn more!</AppText>
+         <PartnerCollage/>
+         <RNSButton
+            caption="Partner With Us"
+            bordered
+            primary
+            style={{ alignSelf: 'center' }}
+            onPress={() => navigation.navigate('Contact')}
+        />
+    </ScrollView>
+    </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
+  safeArea: {
     flex: 1,
+    backgroundColor: colors.white,
   },
-  logoContainer: {
-    alignItems: 'center',
-    marginVertical: 4,
-  },
-  logo :{
-    width: 50,
-    height: 50,
-  },
-  bgImage: {
-    flex: 1,
-    marginHorizontal: -20,
-  },
-  header: {
-    fontFamily: "Arial",
-    fontWeight: "bold",
-    fontStyle: "italic",
-    alignContent: 'center',
-    color: colors.black
+  scrollView: {
+    flexGrow: 1,
+    paddingBottom: 40,
+    marginTop: 25,
   },
   divider: {
-    width: '150%', 
+    width: '60%', 
+    alignSelf: 'center',
     height: 1, 
     backgroundColor: colors.black,  
+    marginTop: 8,
+    marginBottom: 20, 
+    marginHorizontal: 20,
   },
-  headerContainer: {
-    alignItems: 'center',
-  },
-  partnerList: {
-    alignItems: 'center',
-  },
-  listContainer: {
-    alignItems: 'center',
-    paddingRight: 10,
-    width: '100%'
-  },
-  partnerItem: {
-    marginVertical: 15,
+  text:{
+    textAlign: 'center',
   },
   partnerLogo: {
-    width: 200,
-    height: 80,
+    width: 300,
+    height: 100,
+    resizeMode: 'contain',
+    alignSelf: 'center',
+    marginBottom: 20,
+  },
+  container: {
+    flex: 1,
+    backgroundColor: colors.white,
+    marginBottom: 20,
+  },
+  listPadding: {
+    paddingVertical: 20,
+    alignItems: 'center',
+  },
+  itemContainer: {
+    width: imageSize,
+    height: imageSize,
+    margin: 5,
+    justifyContent: 'center',
+    alignItems: 'center',
+    // Optional: Add a light border or shadow to see the grid items
+    borderWidth: 1,
+    borderColor: colors.blue,
+    borderRadius: 8,
+  },
+  logo: {
+    width: '90%',
+    height: '90%',
   },
 });

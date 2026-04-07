@@ -1,6 +1,7 @@
 import HomeScreen from '../home/HomeViewContainer';
 import SummitScreen from '../summit/SummitView';
 import AboutScreen from '../about/AboutViewContainer';
+import PublicationsScreen from '../publications/PublicationsView';
 
 const iconHome = require('../../../assets/images/home.png');
 const iconMFMS = require('../../../assets/images/transparent_black.png');
@@ -26,7 +27,7 @@ const tabNavigationData = [
   },
   {
     name: 'Publications',
-    component: AboutScreen,
+    component: PublicationsScreen,
     icon: iconPublications,
   },
   {
