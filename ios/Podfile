@@ -5,7 +5,7 @@ require Pod::Executable.execute_command('node', ['-p',
     {paths: [process.argv[1]]},
   )', __dir__]).strip
 
-platform :ios, min_ios_version_supported
+platform :ios, '18.0'
 prepare_react_native_project!
 
 # If you are using a `react-native-flipper` your iOS build will fail when `NO_FLIPPER=1` is set.
@@ -20,11 +20,8 @@ prepare_react_native_project!
 # flipper_config = ENV['NO_FLIPPER'] == "1" ? FlipperConfiguration.disabled : FlipperConfiguration.enabled
 flipper_config = FlipperConfiguration.disabled
 
-linkage = ENV['USE_FRAMEWORKS']
-if linkage != nil
-  Pod::UI.puts "Configuring Pod with #{linkage}ally linked Frameworks".green
-  use_frameworks! :linkage => linkage.to_sym
-end
+# We force static frameworks to support Swift pods like Firebase & Notifee
+use_frameworks! :linkage => :static
 pod 'boost', :podspec => '../node_modules/react-native/third-party-podspecs/boost.podspec'
 
 target 'ReactNativeStarter' do
