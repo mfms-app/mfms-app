@@ -11,8 +11,54 @@ PODS:
     - React-Core (= 0.73.1)
     - React-jsi (= 0.73.1)
     - ReactCommon/turbomodule/core (= 0.73.1)
+  - Firebase/Auth (12.10.0):
+    - Firebase/CoreOnly
+    - FirebaseAuth (~> 12.10.0)
+  - Firebase/CoreOnly (12.10.0):
+    - FirebaseCore (~> 12.10.0)
+  - FirebaseAppCheckInterop (12.10.0)
+  - FirebaseAuth (12.10.0):
+    - FirebaseAppCheckInterop (~> 12.10.0)
+    - FirebaseAuthInterop (~> 12.10.0)
+    - FirebaseCore (~> 12.10.0)
+    - FirebaseCoreExtension (~> 12.10.0)
+    - GoogleUtilities/AppDelegateSwizzler (~> 8.1)
+    - GoogleUtilities/Environment (~> 8.1)
+    - GTMSessionFetcher/Core (< 6.0, >= 3.4)
+    - RecaptchaInterop (~> 101.0)
+  - FirebaseAuthInterop (12.10.0)
+  - FirebaseCore (12.10.0):
+    - FirebaseCoreInternal (~> 12.10.0)
+    - GoogleUtilities/Environment (~> 8.1)
+    - GoogleUtilities/Logger (~> 8.1)
+  - FirebaseCoreExtension (12.10.0):
+    - FirebaseCore (~> 12.10.0)
+  - FirebaseCoreInternal (12.10.0):
+    - "GoogleUtilities/NSData+zlib (~> 8.1)"
   - fmt (6.2.1)
   - glog (0.3.5)
+  - GoogleUtilities/AppDelegateSwizzler (8.1.0):
+    - GoogleUtilities/Environment
+    - GoogleUtilities/Logger
+    - GoogleUtilities/Network
+    - GoogleUtilities/Privacy
+  - GoogleUtilities/Environment (8.1.0):
+    - GoogleUtilities/Privacy
+  - GoogleUtilities/Logger (8.1.0):
+    - GoogleUtilities/Environment
+    - GoogleUtilities/Privacy
+  - GoogleUtilities/Network (8.1.0):
+    - GoogleUtilities/Logger
+    - "GoogleUtilities/NSData+zlib"
+    - GoogleUtilities/Privacy
+    - GoogleUtilities/Reachability
+  - "GoogleUtilities/NSData+zlib (8.1.0)":
+    - GoogleUtilities/Privacy
+  - GoogleUtilities/Privacy (8.1.0)
+  - GoogleUtilities/Reachability (8.1.0):
+    - GoogleUtilities/Logger
+    - GoogleUtilities/Privacy
+  - GTMSessionFetcher/Core (5.2.0)
   - hermes-engine (0.73.1):
     - hermes-engine/Pre-built (= 0.73.1)
   - hermes-engine/Pre-built (0.73.1)
@@ -1072,13 +1118,30 @@ PODS:
     - React-perflogger (= 0.73.1)
   - ReactNativeUiLib (3.41.0):
     - React
+  - RecaptchaInterop (101.0.0)
   - RNCAsyncStorage (1.19.0):
     - React-Core
   - RNCMaskedView (0.1.10):
     - React
+  - RNFBApp (24.0.0):
+    - Firebase/CoreOnly (= 12.10.0)
+    - glog
+    - RCT-Folly (= 2022.05.16.00)
+    - React-Core
+  - RNFBAuth (24.0.0):
+    - Firebase/Auth (= 12.10.0)
+    - glog
+    - RCT-Folly (= 2022.05.16.00)
+    - React-Core
+    - RNFBApp
   - RNGestureHandler (1.8.0):
     - React
   - RNLocalize (1.4.2):
+    - React-Core
+  - RNNotifee (9.1.8):
+    - React-Core
+    - RNNotifee/NotifeeCore (= 9.1.8)
+  - RNNotifee/NotifeeCore (9.1.8):
     - React-Core
   - RNReanimated (1.13.4):
     - React-Core
@@ -1151,8 +1214,11 @@ DEPENDENCIES:
   - ReactNativeUiLib (from `../node_modules/react-native-ui-lib`)
   - "RNCAsyncStorage (from `../node_modules/@react-native-async-storage/async-storage`)"
   - "RNCMaskedView (from `../node_modules/@react-native-community/masked-view`)"
+  - "RNFBApp (from `../node_modules/@react-native-firebase/app`)"
+  - "RNFBAuth (from `../node_modules/@react-native-firebase/auth`)"
   - RNGestureHandler (from `../node_modules/react-native-gesture-handler`)
   - RNLocalize (from `../node_modules/react-native-localize`)
+  - "RNNotifee (from `../node_modules/@notifee/react-native`)"
   - RNReanimated (from `../node_modules/react-native-reanimated`)
   - RNScreens (from `../node_modules/react-native-screens`)
   - RNVectorIcons (from `../node_modules/react-native-vector-icons`)
@@ -1161,8 +1227,18 @@ DEPENDENCIES:
 
 SPEC REPOS:
   trunk:
+    - Firebase
+    - FirebaseAppCheckInterop
+    - FirebaseAuth
+    - FirebaseAuthInterop
+    - FirebaseCore
+    - FirebaseCoreExtension
+    - FirebaseCoreInternal
     - fmt
+    - GoogleUtilities
+    - GTMSessionFetcher
     - libevent
+    - RecaptchaInterop
     - SocketRocket
 
 EXTERNAL SOURCES:
@@ -1275,10 +1351,16 @@ EXTERNAL SOURCES:
     :path: "../node_modules/@react-native-async-storage/async-storage"
   RNCMaskedView:
     :path: "../node_modules/@react-native-community/masked-view"
+  RNFBApp:
+    :path: "../node_modules/@react-native-firebase/app"
+  RNFBAuth:
+    :path: "../node_modules/@react-native-firebase/auth"
   RNGestureHandler:
     :path: "../node_modules/react-native-gesture-handler"
   RNLocalize:
     :path: "../node_modules/react-native-localize"
+  RNNotifee:
+    :path: "../node_modules/@notifee/react-native"
   RNReanimated:
     :path: "../node_modules/react-native-reanimated"
   RNScreens:
@@ -1296,8 +1378,17 @@ SPEC CHECKSUMS:
   DoubleConversion: fea03f2699887d960129cc54bba7e52542b6f953
   FBLazyVector: 2296bacb2fa157a43991048b0a9d71c1c8b65083
   FBReactNativeSpec: df0ebe69acd14ce0be0269cf75b6e338a727259b
+  Firebase: 99f203d3a114c6ba591f3b32263a9626e450af65
+  FirebaseAppCheckInterop: 2480ab50a070a6bc02e26e62733874361f017a11
+  FirebaseAuth: 7109e33998bbd96f983dc02b97289b535f6f4141
+  FirebaseAuthInterop: f9c841843d840cae6a7db7551452eac520ffa3bd
+  FirebaseCore: f4428e22415ea3b3eca652c2098413dabf2a23a9
+  FirebaseCoreExtension: 3473a6ec16a91aee29fb75994a86c0220d2cddf3
+  FirebaseCoreInternal: e7bbaeb00ab73011298f35ed223aa7371e212948
   fmt: ff9d55029c625d3757ed641535fd4a75fedc7ce9
   glog: c5d68082e772fa1c511173d6b30a9de2c05a69a2
+  GoogleUtilities: 00c88b9a86066ef77f0da2fab05f65d7768ed8e1
+  GTMSessionFetcher: 904bdd2a82c635bcd6f44edf94cc8775c5d1d6e6
   hermes-engine: 34df9d5034e90bd9bf1505e1ca198760373935af
   libevent: 4049cae6c81cdb3654a443be001fb9bdceff7913
   RCT-Folly: cd21f1661364f975ae76b3308167ad66b09f53f5
@@ -1305,57 +1396,61 @@ SPEC CHECKSUMS:
   RCTTypeSafety: df0f2632f4e89938b9b9f6152b5e6c66fc6e969e
   React: 5373769b4a544945831d9c5d455212186d68f763
   React-callinvoker: 2c54fb73b27fdf9bd7772f36dcda23d76e0e7d14
-  React-Codegen: 441e533017626938be42273d2a7db316350a630f
+  React-Codegen: 491a91d6773424e81643275d25de30066a42024f
   React-Core: 29cb7c8e019c40d9cd028dffc2606baf85b6b4af
   React-CoreModules: bd3f3901d01e1f7f23346fdf2b19acf47e310a7c
   React-cxxreact: a1ac0bf76620aac2b16342393d2dee1a02de348f
-  React-debug: 52cced4b9e280d03825d687925898cf65bd8712d
-  React-Fabric: 0e76260f4e56d07e0a17dcb6bf89a773d360b7f1
-  React-FabricImage: a038dc64e8f0258d07602046f76be0e4ccedc56a
-  React-graphics: 8325502a51fbfb8951968345c39c7a11e2277050
+  React-debug: 6c67b590ae38e4a509d4ca85d23ea5587926e606
+  React-Fabric: 91429b2413355468cbffece003230e2cda69dbdb
+  React-FabricImage: e21bed4bb599e6156ec65358f013bd4d0f068ee5
+  React-graphics: 92d18cd6da4e7b118dd2a72a9562ad672fd71ca8
   React-hermes: e87ea4a33640102676237dabfa117d60614d3e44
-  React-ImageManager: 4b2be19fcc87e6460405fea68c0375f985b6eb5b
-  React-jserrorhandler: 88d1cd6ae254f396ae666a9ad5e23e5921f46f10
+  React-ImageManager: 3f386cd126fab05232c53b581481528c0a310110
+  React-jserrorhandler: 39aa916225e2d8d169f8777e0f3dc0bea24e0623
   React-jsi: 1b03b7a00877cdba995e96d2476c8757495b8897
   React-jsiexecutor: 38fef6e60367ad3090c54a8d91f1fb48ed773366
   React-jsinspector: 369048694e39942063c5d08e9580b43e2edd379a
   React-logger: c6cc01d7cff5f77924db08c7fbaf5a4d7a9ab857
-  React-Mapbuffer: cdacbf489e965b624d6b8a9b3a4529c15116a708
+  React-Mapbuffer: 5255b6d24f741e44e7a7ddbf1f494b7c25890eed
   react-native-safe-area-context: 1b229872ad5eefde82f117a6a2c97a7f71717537
-  react-native-video: e69fa1cc1d8ff8e6e86dfe201c3f6eb2b433ac5e
-  react-native-webview: e5712fbdf66ad42fe594a2f396a03d660ff17c0f
-  React-nativeconfig: 37aecd26d64b79327c3f10e43b2e9a6c425e0a60
-  React-NativeModulesApple: ef377fffdb9789f87b27c30e3597d7c00190e7ed
+  react-native-video: a1ea2e400bf6dce6212dbdc4f7d72f4e4b5e605f
+  react-native-webview: c669066263a4cd1474745d2c8c451cad438d38d7
+  React-nativeconfig: a8685fce6d0ffbb77b1fe983895dbbc7bfe949ad
+  React-NativeModulesApple: a3dc48b47f71ee37e80db713bd65d6a2de920916
   React-perflogger: 5ffc4d6ccb74eaac7b8b2867e58a447232483d6d
   React-RCTActionSheet: eca2174431ff2cc14b7fb847f92b89e081d27541
   React-RCTAnimation: 86e56a30d021edabc56a9b1cf309c2868f0b69c2
   React-RCTAppDelegate: a2009bdd4152e438df6a1af537904ce975bff9cf
   React-RCTBlob: 25e279582da8859a6d41de52747f35d6ca9dcfb9
-  React-RCTFabric: e2b03b05717740e6b0b03ee42c091ddf6fce522e
+  React-RCTFabric: 7de42801397cd34ac41a01bd3f35a1f41c2884ec
   React-RCTImage: f380e18a6bcce14cb01c04bfb783f877816d48c8
   React-RCTLinking: 2d793263f2413df759841dcdd24cbfcd575e932b
   React-RCTNetwork: 0a23d76fcb3653cc2789f71d21aebe61163652ca
   React-RCTSettings: 1aaae5f724b89519814717b5ed451f620256335c
   React-RCTText: b930334c85d62557b32b42c7a337f04e05fa937d
   React-RCTVibration: 7d2ca6bb0020ec1b93909a12b68563016b401a84
-  React-rendererdebug: cab0499c9dfdf345acce218befbb961378891828
-  React-rncore: d1aa3c2f01b22a53bc10ff2775e6ddcd43fc71a2
+  React-rendererdebug: ad6efcff93e615c25ca89061d8da7a485a559775
+  React-rncore: 68a68a2465903678582ecbdd013574b656e28c99
   React-runtimeexecutor: d87e84455640dc5685e87563c2eaef90e5df8752
-  React-runtimescheduler: fbb86d1d0106c8cdf8eef2b40dd13777ec350346
-  React-utils: eeb855be1ce3f62dc5907a299dd2495858abc2f8
-  ReactCommon: 1ea6a0bf804e7371f8da38d7851f0adb8f76f479
+  React-runtimescheduler: 65589c995a4177c7c2f8d21c97f284453e0b1531
+  React-utils: 7c600daa5b24f9103e230d99a776fabe64b85792
+  ReactCommon: a1f2941d66adaf304650f165f8addc976ff692c1
   ReactNativeUiLib: 20cd1f45c40fd497ff547abd4d3a52fe519f4d5a
+  RecaptchaInterop: 11e0b637842dfb48308d242afc3f448062325aba
   RNCAsyncStorage: b33ba15f623939b6e244cbb93863bcf01c409e0f
   RNCMaskedView: f547d4e28ae25ea4a25e5a26033dc99558013e1f
+  RNFBApp: 170826267283056a1550e0b17ea25e1fee377b43
+  RNFBAuth: 631698fbd6b3f34b31881ef952faf68f25bea83e
   RNGestureHandler: 598afd31373eba0f9a59a1fa9f4c067f138e1262
   RNLocalize: bb0c3cc01f982d9de5c57cf2335dfa540f3ba1c1
+  RNNotifee: 5e3b271e8ea7456a36eec994085543c9adca9168
   RNReanimated: e6eff6f3edc00e1de90a54b21306e03f6b8706a7
   RNScreens: b2795b1ec878c0ff89142ad65c6b1de527b87044
-  RNVectorIcons: ff027ab4234109f91d261fbceae7f0bf95dcc479
+  RNVectorIcons: 3e46e4661284b713090ca9551aafa829e7f34cdb
   SocketRocket: f32cd54efbe0f095c4d7594881e52619cfe80b17
   toolbar-android: c426ed5bd3dcccfed20fd79533efc0d1ae0ef018
   Yoga: 4f53dc50008d626fa679c7a1cb4bed898f8c0bde
 
-PODFILE CHECKSUM: 8803d9c488f9c599b00512d06f3d85a1fcbdd719
+PODFILE CHECKSUM: 52259c0de1e567af928b98b02eceb9c6065ee2aa
 
 COCOAPODS: 1.16.2
