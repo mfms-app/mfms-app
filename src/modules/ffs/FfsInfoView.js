@@ -9,6 +9,7 @@ import {
   Dimensions,
   Easing,
   Linking,
+  SafeAreaView
 } from 'react-native';
 import { colors } from '../../styles';
 import { Text } from '../../components/StyledText';
@@ -30,12 +31,11 @@ const SCREEN_WIDTH = Dimensions.get('window').width;
 
 // TODO: Replace finalists
 const finalists = [
-  { id: '1', name: 'Adelina Akhmetshina', source: require('../../../assets/images/ffs/Adelina.jpg')},
-  { id: '2', name: 'Eden Meidl', source: require('../../../assets/images/ffs/Eden.jpg') },
-  { id: '3', name: 'Madeline Incammicia', source: require('../../../assets/images/ffs/Madeline.jpg')},
-  { id: '4', name: 'Miles Watkins', source: require('../../../assets/images/ffs/Miles.jpg') },
-  { id: '5', name: 'Preston Ross', source: require('../../../assets/images/ffs/Preston.jpg') },
-  { id: '6', name: 'Rachel Goldstein', source: require('../../../assets/images/ffs/Rachel_Goldstein.png') },
+  { id: '1', name: 'Evelyn Short', source: require('../../../assets/images/ffs/EvelynShort_Headshot.jpg')},
+  { id: '2', name: 'Anya von Wolff', source: require('../../../assets/images/ffs/AnyavonWolff_Headshot.jpg') },
+  { id: '3', name: 'Tristian Laney', source: require('../../../assets/images/ffs/TristianLaney_Headshot.jpg')},
+  { id: '4', name: 'Jude Fairchild', source: require('../../../assets/images/ffs/JudeFairchild_Headshot.jpeg') },
+  { id: '5', name: 'Isabella Possin', source: require('../../../assets/images/ffs/IsabellaPossin_Headshot.pdf') }
 ]
 
 export default function FFSScreen({ isExtended, setIsExtended }) {
@@ -89,7 +89,8 @@ export default function FFSScreen({ isExtended, setIsExtended }) {
   }, [slideAnim1]);  
 
   return (
-    <ScrollView contentContainerStyle={{ flexGrow: 1, backgroundColor: colors.white }}>
+    <SafeAreaView style={styles.safeArea}>
+    <ScrollView contentContainerStyle={{ flexGrow: 1, backgroundColor: colors.white }} showsVerticalScrollIndicator={false}>
       <View style={styles.textContainer}>
       <AppText style={styles.text} variant='h1'>Fashion Forward Showcase</AppText>
       <View style={styles.divider} />
@@ -173,7 +174,7 @@ export default function FFSScreen({ isExtended, setIsExtended }) {
       contentContainerStyle={styles.gallery}
     />
     </ScrollView>
-
+    </SafeAreaView>
   );
 }
 
@@ -181,6 +182,11 @@ const styles = StyleSheet.create({
   flexGrow: {
     flex: 1,
     backgroundColor: colors.white
+  },
+  safeArea: {
+      flex: 1,
+      backgroundColor: colors.white,
+      paddingTop: Platform.select({ ios: 0, android: StatusBar.currentHeight }),
   },
   text:{
     textAlign: 'center',

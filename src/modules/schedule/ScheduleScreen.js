@@ -188,7 +188,7 @@ const styles = StyleSheet.create({
     marginBottom: 12,
     borderRadius: 12,
     // Shadow for iOS
-    shadowColor: '#000',
+    shadowColor: colors.black,
     shadowOffset: { width: 0, height: 3 },
     shadowOpacity: 0.2,
     shadowRadius: 6,

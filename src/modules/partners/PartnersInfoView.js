@@ -225,33 +225,24 @@ const PartnerCollage = () => {
     const supported = await Linking.canOpenURL(url);
     if (supported) {
       await Linking.openURL(url);
-    } else {
-      console.log(`Don't know how to open this URL: ${url}`);
     }
   };
 
-  const renderItem = ({ item }) => (
-    <TouchableOpacity 
-      style={styles.itemContainer} 
-      onPress={() => handlePress(item.link)}
-    >
-      <Image 
-        source={item.logo} 
-        style={styles.logo} 
-        resizeMode="contain" 
-      />
-    </TouchableOpacity>
-  );
-
   return (
     <View style={styles.container}>
-      <FlatList
-        data={partners}
-        renderItem={renderItem}
-        keyExtractor={(item) => item.name}
-        numColumns={numColumns}
-        contentContainerStyle={styles.listPadding}
-      />
+      {partners.map((item) => (
+        <TouchableOpacity 
+          key={item.name}
+          style={styles.itemContainer} 
+          onPress={() => handlePress(item.link)}
+        >
+          <Image 
+            source={item.logo} 
+            style={styles.logo} 
+            resizeMode="contain" 
+          />
+        </TouchableOpacity>
+      ))}
     </View>
   );
 };
@@ -260,41 +251,41 @@ export default function PartnerScreen() {
   const navigation = useNavigation();
   return (
     <SafeAreaView style={styles.safeArea}> 
-    <ScrollView 
-    contentContainerStyle={styles.scrollView}
-    showsVerticalScrollIndicator={false}> 
-       {/* Header Section */}
+      <ScrollView 
+        contentContainerStyle={styles.scrollView}
+        showsVerticalScrollIndicator={false}> 
          <AppText style={styles.text} variant='h1'>Partners</AppText>
          <View style={styles.divider} />
+         
          <AppText style={styles.text} variant='h2'>Presented By:</AppText>
-
-         {/* Steve Madden Logo */}
          <Image source={presentingPartner.logo} style={styles.partnerLogo}/>
 
-         {/* Partner Collage */}
          <AppText style={styles.text} variant='body'>Click on our partners to learn more!</AppText>
+         
+         {/* The Collage */}
          <PartnerCollage/>
+         
+         {/* The Button with explicit top margin */}
          <RNSButton
             caption="Partner With Us"
             bordered
             primary
-            style={{ alignSelf: 'center' }}
+            style={styles.buttonStyle}
             onPress={() => navigation.navigate('Contact')}
         />
-    </ScrollView>
+      </ScrollView>
     </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
   safeArea: {
-    flex: 1,
     backgroundColor: colors.white,
   },
   scrollView: {
-    flexGrow: 1,
-    paddingBottom: 40,
-    marginTop: 25,
+    paddingBottom: 60, // Extra space at the very bottom of the scroll
+    paddingTop: 25,
+    paddingHorizontal: 15,
   },
   divider: {
     width: '60%', 
@@ -303,7 +294,6 @@ const styles = StyleSheet.create({
     backgroundColor: colors.black,  
     marginTop: 8,
     marginBottom: 20, 
-    marginHorizontal: 20,
   },
   text:{
     textAlign: 'center',
@@ -316,27 +306,39 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   container: {
-    flex: 1,
-    backgroundColor: colors.white,
-    marginBottom: 20,
-  },
-  listPadding: {
-    paddingVertical: 20,
-    alignItems: 'center',
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'center',
+    marginTop: 10,
+    // Removed listPadding and duplicate definitions
   },
   itemContainer: {
-    width: imageSize,
-    height: imageSize,
-    margin: 5,
-    justifyContent: 'center',
+    width: '28%', 
+    aspectRatio: 1,
+    marginHorizontal: '2%',
+    marginVertical: 8,     
     alignItems: 'center',
-    // Optional: Add a light border or shadow to see the grid items
-    borderWidth: 1,
-    borderColor: colors.blue,
-    borderRadius: 8,
+    justifyContent: 'center',
+    backgroundColor: colors.white,
+    borderRadius: 12,
+    
+    // Shadow
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 3,
+    elevation: 3,
+    
+    borderWidth: 0.5,
+    borderColor: 'rgba(0,0,0,0.05)',
   },
   logo: {
-    width: '90%',
-    height: '90%',
+    width: '80%',
+    height: '80%',
   },
+  buttonStyle: {
+    alignSelf: 'center', 
+    marginTop: -100, // Control the gap from the logos here
+    width: '80%',  // Optional: makes the button look more balanced
+  }
 });
