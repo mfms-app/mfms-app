@@ -1,182 +1,100 @@
 import React, {useState} from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, ScrollView, ImageBackground } from 'react-native';
+import { View, TouchableOpacity, StyleSheet, ScrollView, Linking, SafeAreaView } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import { fonts, colors } from '../../styles';
+import {colors } from '../../styles';
+import AppText from '../../components/Text';
+import RNSButton from '../../components/Button';
+
+const ticketOptions = [
+  {
+    title: 'General Admissions',
+    price: '$35',
+    description: 'This is an all inclusive ticket to the summit from 8am-5pm',
+  },
+  {
+    title: 'VIP Ticket',
+    price: '$45',
+    description: 'This ticket includes the summit and the Thursday Night Launch Party',
+  },
+  {
+    title: 'Virtual Ticket',
+    price: '$15',
+    description: 'This ticket includes a virtual link to watch the summit live from 8am-5pm',
+  },
+];
 
 const TicketsScreen = () => {
   const navigation = useNavigation();
-  const [isPressed, setIsPressed] = useState(false);
-  
   return (
-    <ScrollView contentContainerStyle={styles.container}>
-      <ImageBackground
-              source={require('../../../assets/images/background.png')}
-              style={styles.bgImage}
-              resizeMode="cover"
-      >
-        <Text style={styles.sectionTitle}>About Tickets</Text>
-        <View style={styles.dividerHeader} />
-        <View style={styles.ticketContainer}>
-          <Text style={styles.ticketType}>General Admission</Text>
-          <Text style={styles.ticketPrice}>$35</Text>
+    <SafeAreaView style={styles.safeArea}> 
+      <ScrollView contentContainerStyle={styles.scrollView} showsVerticalScrollIndicator={false}> 
+        <AppText style={styles.text} variant='h1'>Tickets</AppText>
+        <View style={styles.divider}/>
+        <View style={styles.container}>
+          <AppText style={styles.text} variant='body'>The MFMS handles all ticket transactions through Eventbrite. Click the button below to be redirected to an external site where you can purchase your ticket.</AppText>
+          <RNSButton
+            caption="Purchase Tickets"
+            bordered
+            primary
+            onPress={() => Linking.openURL('https://www.eventbrite.com/e/michigan-fashion-media-summit-2026-tickets-1983105754696?aff=ebdsoporgprofile')}
+            style={{ alignSelf: 'center'}}
+          />
         </View>
 
-        <Text size="2"></Text>
-
-        <Text style={styles.ticketDescription}>
-          This is an all-inclusive ticket to the summit from 8am-5pm.
-        </Text>
-
-        <View style={styles.ticketContainer}>
-          <Text style={styles.ticketType}>VIP Ticket</Text>
-          <Text style={styles.ticketPrice}>$45</Text>
+        <View style={styles.container} >
+          <AppText style={styles.text} variant='body'>Attendees can purchase three types of tickets to the MFMS</AppText>
+          {ticketOptions.map((ticket, index) => (
+          <TouchableOpacity key={index} style={{ marginTop: 20 }}>
+          <View style={styles.headerRow}>
+            <AppText variant='h3'>{ticket.title}</AppText>
+            <AppText variant='h3'>{ticket.price}</AppText>
+          </View>
+          <AppText variant='body' style={styles.description}>
+            {ticket.description}
+          </AppText>
+         </TouchableOpacity>
+        ))}
         </View>
-
-        <Text size="2"></Text>
-
-        <Text style={styles.ticketDescription}>
-          This ticket includes the summit and the Thursday Night Launch Party.
-        </Text>
-
-        <View style={styles.ticketContainer}>
-          <Text style={styles.ticketType}>Virtual Ticket</Text>
-          <Text style={styles.ticketPrice}>$15</Text>
-        </View>
-
-        <Text size="2"></Text>
-
-        <Text style={styles.ticketDescription}>
-          This ticket allows you to watch the summit virtually.
-        </Text>
-
-        <View style={styles.divider} />
-
-        <Text style={styles.sectionTitle2}>Your MFMS Ticket</Text>
-        <Text style={styles.description}>
-          The MFMS handles all ticket transactions through Eventbrite. Click the button below to purchase your ticket.
-        </Text>
-
-        <TouchableOpacity
-                  activeOpacity={1} // Prevents automatic opacity change
-                  style={[isPressed ? styles.buttonPressed : styles.button]}          
-                  onPress={() => navigation.navigate('TicketsView')}
-                  onPressIn={() => setIsPressed(true)}
-                  onPressOut={() => setIsPressed(false)}
-                >
-                  <Text style={styles.buttonText}>Purchase Tickets</Text>
-                </TouchableOpacity>
-        </ImageBackground>
-    </ScrollView>
+      </ScrollView>
+    </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
-    paddingHorizontal: 20,
-    flexGrow: 1,
-    backgroundColor: colors.white,
-  },
-  bgImage: {
+ safeArea: {
     flex: 1,
+    backgroundColor: colors.white,
+    paddingTop: Platform.select({ ios: 0, android: StatusBar.currentHeight }),
   },
-  sectionTitle: {
-    // marginBottom: 5,
+  scrollView: {
+    flexGrow: 1,
+    paddingBottom: 40,
     marginTop: 25,
-    // fontFamily: "Arial",
-    // fontSize: 28,
-    // fontWeight: '600', //semi-bold
-    // textAlign: 'center',
-    // fontStyle: "italic",
-    // color: colors.black,
-    // marginHorizontal: 20,
-    fontFamily: "NeueHaasDisplayRoman",
-    fontSize: 36,
-    fontWeight: '600', //semi-bold
+  },
+  text:{
     textAlign: 'center',
-    color: colors.black,
-    marginHorizontal: 20,
-  },
-  sectionTitle2:{
-    fontFamily: "NeueHaasDisplayRoman",
-    fontSize: 30,
-    marginTop: 25,
-    fontWeight: '600', //semi-bold
-    textAlign: 'center',
-    color: colors.black,
-    marginHorizontal: 20,
-
-  },
-  description: {
-    fontSize: 16,
-    color: colors.gray,
-    textAlign: 'center',
-    fontFamily: "NeueHaasDisplayRoman",
-    width: "100%",
-    marginTop: 10,
-  },
-  ticketContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    marginTop: 30,
-    marginLeft: 20,
-    marginRight: 20
-  },
-  ticketType: {
-    fontSize: 18,
-    fontWeight: 'bold',
-    fontFamily: fonts.primaryRegular
-  },
-  ticketPrice: {
-    fontSize: 18,
-    fontWeight: 'bold',
-    marginRight: 5
-  },
-  ticketDescription: {
-    fontSize: 16,
-    color: colors.gray,
-    marginLeft: 20,
-    marginRight: 20
   },
   divider: {
-    borderBottomWidth: 1,
-    borderBottomColor: colors.gray,
-    marginTop: 30,
-  },
-  dividerHeader: {
-    width: '75%', 
-    height: 1, 
+    width: '60%', 
     alignSelf: 'center',
+    height: 1, 
     backgroundColor: colors.black,  
-    marginVertical: 8,
+    marginTop: 8,
     marginHorizontal: 20,
   },
-  button: {
-    backgroundColor: colors.white, // White background
-    borderColor: colors.gray, // Black border color
-    padding: 10,
-    borderRadius: 5,
-    alignItems: 'center',
-    marginVertical: 20,
-    marginHorizontal: '20%',
-    borderWidth: 2, // Black border
-    marginTop: 20
+  container: {
+    marginHorizontal: 40,
+    marginTop: 40,
+    gap: 20,
   },
-  buttonPressed: {
-    backgroundColor: colors.black, 
-    borderColor: colors.white, 
-    padding: 10,
-    borderRadius: 5,
-    alignItems: 'center',
-    marginVertical: 20,
-    marginHorizontal: '20%',
-    borderWidth: 2, // Black border
-    marginTop: 20
+  headerRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginBottom: 8,
   },
-  buttonText: {
-    color: colors.black,
-    fontSize: 16,
-    fontWeight: 'bold',
-  },
+  description: {
+   paddingRight: 60,
+  }
 });
 
 export default TicketsScreen;

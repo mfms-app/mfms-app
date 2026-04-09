@@ -11,136 +11,152 @@ const defaultState = {
 const schedule = [
   {
     id: 15,
-    startTime: new Date('2025-03-28T08:45:00').toLocaleString('en-US', { hour: '2-digit', minute: '2-digit' }),
-    endTime: new Date('2025-03-28T09:30:00').toLocaleString('en-US', { hour: '2-digit', minute: '2-digit' }),
+    startTime: new Date('2026-04-17T08:30:00').toLocaleString('en-US', { hour: '2-digit', minute: '2-digit' }),
+    endTime: new Date('2026-04-17T09:20:00').toLocaleString('en-US', { hour: '2-digit', minute: '2-digit' }),
     speakers: '',
     title: 'Check-In',
     location: 'Ross Winter Garden',
   },
   {
     id: 1,
-    startTime: new Date('2025-03-28T09:30:00').toLocaleString('en-US', { hour: '2-digit', minute: '2-digit' }),
-    endTime: new Date('2025-03-28T09:40:00').toLocaleString('en-US', { hour: '2-digit', minute: '2-digit' }),
-    speakers: 'Izzy Saunders | Co-President of MFMS; Lila Grayson | Co-President of MFMS',
+    startTime: new Date('2026-04-17T09:20:00').toLocaleString('en-US', { hour: '2-digit', minute: '2-digit' }),
+    endTime: new Date('2026-04-17T09:40:00').toLocaleString('en-US', { hour: '2-digit', minute: '2-digit' }),
+    speakers: [
+      { name: 'Ali Gropper', title: 'MFMS Co-Founder, Celebrity Wardrobe Stylist & Co-Founder, Danielle & Alix' },
+      { name: 'Wade Bassock', title: 'Co-President of MFMS' },
+      { name: 'Ryan Sweeney', title: 'Co-President of MFMS' },
+    ],
     title: 'Opening Remarks',
     location: 'Robertson Auditorium',
   },
   {
     id: 2,
-    startTime: new Date('2025-03-28T09:40:00').toLocaleString('en-US', { hour: '2-digit', minute: '2-digit' }),
-    endTime: new Date('2025-03-28T10:15:00').toLocaleString('en-US', { hour: '2-digit', minute: '2-digit' }),
-    speakers: 'Chelsea Parke Kramer | Founder and CEO of Parke; Ella Rose McFadin | Founder of Skin by Ella; Dianna Cohen | Founder of Crown Affair; (Moderator) Jessica Williams | Head of Brand and Partnerships at Shopify',
-    title: 'From Followers to Founders: Creators Building Thriving Businesses',
+    startTime: new Date('2026-04-17T09:40:00').toLocaleString('en-US', { hour: '2-digit', minute: '2-digit' }),
+    endTime: new Date('2026-04-17T10:20:00').toLocaleString('en-US', { hour: '2-digit', minute: '2-digit' }),
+    speakers: [
+      { name: 'Steve Shiffman', title: 'Strategic Advisor, Coach, & Former CEO of Calvin Klein'},
+      { name: 'Ken Pilot', title: 'Founder of Ken Pilot Ventures'}
+    ],
+    title: 'Keynote: Steve Shiffman',
     location: 'Robertson Auditorium',
   },
   {
     id: 3,
-    startTime: new Date('2025-03-28T10:20:00').toLocaleString('en-US', { hour: '2-digit', minute: '2-digit' }),
-    endTime: new Date('2025-03-28T10:55:00').toLocaleString('en-US', { hour: '2-digit', minute: '2-digit' }),
-    speakers: 'Lori Singer | President of Parlux Fragrances; Jon Dinapoli | Founder and Chief Creative of Jon Michael Design',
-    title: 'Beyond the Bottle: Translating Fashion to Fragrance',
+    startTime: new Date('2026-04-17T10:20:00').toLocaleString('en-US', { hour: '2-digit', minute: '2-digit' }),
+    endTime: new Date('2026-04-17T10:50:00').toLocaleString('en-US', { hour: '2-digit', minute: '2-digit' }),
+    speakers: [
+      { name: 'Kenneth Himmel', title: 'President of Related Ross', link:'' },
+      { name: 'Webber Hudson', title: 'Executive Vice President, Retail Leasing and Asset Management Related Ross' }
+    ],
+    title: 'Fireside: Building The Foundation: The Business of Luxury Real Estate & Fashion',
     location: 'Robertson Auditorium',
   },
   {
     id: 4,
-    startTime: new Date('2025-03-28T10:55:00').toLocaleString('en-US', { hour: '2-digit', minute: '2-digit' }),
-    endTime: new Date('2025-03-28T11:00:00').toLocaleString('en-US', { hour: '2-digit', minute: '2-digit' }),
+    startTime: new Date('2026-04-17T10:50:00').toLocaleString('en-US', { hour: '2-digit', minute: '2-digit' }),
+    endTime: new Date('2026-04-17T10:55:00').toLocaleString('en-US', { hour: '2-digit', minute: '2-digit' }),
     speakers: '',
     title: 'Fashion Forward Showcase Video',
     location: 'Robertson Auditorium',
   },
   {
     id: 5,
-    startTime: new Date('2025-03-28T11:00:00').toLocaleString('en-US', { hour: '2-digit', minute: '2-digit' }),
-    endTime: new Date('2025-03-28T11:30:00').toLocaleString('en-US', { hour: '2-digit', minute: '2-digit' }),
-    speakers: 'Donni Davy | Head Makeup Artist of Euphoria; Sophia Rzankowski | Chief of Staff at Superconnector Studios; James Bee | Photographer; (Moderator) Emily Blaire | CEO & Founder of Emily Blaire Media',
-    title: 'Lights, Camera, Style: How Entertainment is Shaping the Beauty and Fashion Industry',
+    startTime: new Date('2026-04-17T11:00:00').toLocaleString('en-US', { hour: '2-digit', minute: '2-digit' }),
+    endTime: new Date('2026-04-17T11:30:00').toLocaleString('en-US', { hour: '2-digit', minute: '2-digit' }),
+    speakers: [
+      { name: 'Madison Woolley', title: 'Founder & Designer of 23rd & Madison; Co-Founder & Creative Director of PURR Studio and Weddings by PURR' },
+      { name: 'Sasha Mutchnik', title: 'Senior Director of Social for GQ Magazine' },
+      { name: 'Haley Polkes', title: 'Director of Brand & PR at The Center Brands' },
+      { name: 'Nic Byrom', title: 'Creative Director, OOTD' },
+      { name: 'Marcus Collins', title: 'Marketing Professor at the University of Michigan, and Co-Host of From the Culture Podcast' }
+    ],
+    title: 'Brand Storytelling: Content To Connection',
     location: 'Robertson Auditorium',
   },
   {
     id: 6,
-    startTime: new Date('2025-03-28T11:35:00').toLocaleString('en-US', { hour: '2-digit', minute: '2-digit' }),
-    endTime: new Date('2025-03-28T12:10:00').toLocaleString('en-US', { hour: '2-digit', minute: '2-digit' }),
-    speakers: 'Bonnie Abraham | Senior Vice President of Retail at Balenciaga, Americas; Daniel Jadczak | Chief Information Officer of LVMH Inc. North America; Rebecca Goodman | Vice President of Marketing and Communications at Manolo Blahnik, Americas; (Moderator) James Nakajima',
-    //TODO = add moderator title
-    title: 'The New Rules of Luxury Fashion',
+    startTime: new Date('2026-04-17T11:35:00').toLocaleString('en-US', { hour: '2-digit', minute: '2-digit' }),
+    endTime: new Date('2026-04-17T12:10:00').toLocaleString('en-US', { hour: '2-digit', minute: '2-digit' }),
+    speakers: [
+      { name: 'Brandon Williams', title: 'Creative Director + Celebrity Stylist, Hudson Jeans' },
+      { name: 'Ali Gropper', title: 'MFMS Co-Founder, Celebrity Wardrobe Stylist & Co-Founder, Danielle & Alix' },
+    ],
+    title: 'Beyond the Basics: The Art of Styling Menswear',
     location: 'Robertson Auditorium',
   },
   {
     id: 7,
-    startTime: new Date('2025-03-28T12:10:00').toLocaleString('en-US', { hour: '2-digit', minute: '2-digit' }),
-    endTime: new Date('2025-03-28T13:15:00').toLocaleString('en-US', { hour: '2-digit', minute: '2-digit' }),
-    speakers: 'Wolverine Worldwide',
-    title: 'Lunch & Learn',
+    startTime: new Date('2026-04-17T12:15:00').toLocaleString('en-US', { hour: '2-digit', minute: '2-digit' }),
+    endTime: new Date('2026-04-17T13:10:00').toLocaleString('en-US', { hour: '2-digit', minute: '2-digit' }),
+    speakers: [
+      { name: 'Ross Catering', title: '' }
+    ],
+    title: 'Lunch',
     location: 'To Be Announced',
   },
   {
     id: 8,
-    startTime: new Date('2025-03-28T13:15:00').toLocaleString('en-US', { hour: '2-digit', minute: '2-digit' }),
-    endTime: new Date('2025-03-28T13:45:00').toLocaleString('en-US', { hour: '2-digit', minute: '2-digit' }),
-    speakers: 'Sami Clarke Barnett | Co-Founder of Form; JT Barnett | Founder of CreatorX; (Moderator) Shelby Silva | VP of Operations at FORM ',
-    title: 'The Power of Influence: Fitness, Wellness & Fashion in Media',
+    startTime: new Date('2026-04-17T13:10:00').toLocaleString('en-US', { hour: '2-digit', minute: '2-digit' }),
+    endTime: new Date('2026-04-17T14:20:00').toLocaleString('en-US', { hour: '2-digit', minute: '2-digit' }),
+    speakers: [
+      { name: 'Grace Drettman', title: 'Global Partnerships & Media Measurement Lead at Google'},
+      { name: 'Olivia Landau', title: 'Founder & CEO of The Clear Cut' },
+      { name: 'Kate Davidson Hudson', title: 'Founder + CEO of Vêtir' },
+      { name: 'Uma Chalik', title: 'Investor, Torch Capital'}
+    ],
+    title: 'Agentic Commerce: Enhancing Consumer Experience with AI',
     location: 'Robertson Auditorium',
   },
   {
     id: 9,
-    startTime: new Date('2025-03-28T13:50:00').toLocaleString('en-US', { hour: '2-digit', minute: '2-digit' }),
-    endTime: new Date('2025-03-28T14:20:00').toLocaleString('en-US', { hour: '2-digit', minute: '2-digit' }),
-    speakers: 'Mike Sainristil | NFL Cornerback for the Washington Commanders and Captain of Michigan National Championship Team 144; Dan Soloman | Celebrity Stylist and CEO of Closet Tours; (Moderator) Seth Ader | Vice President of Brand Marketing at ESPN',
-    // TODO = add one more person  - joe holden?
-    title: 'Redefining the Game: The Intersection of Sports and Fashion',
-    location: 'Robertson Auditorium',
-  },
-  {
-    id: 10,
-    startTime: new Date('2025-03-28T14:20:00').toLocaleString('en-US', { hour: '2-digit', minute: '2-digit' }),
-    endTime: new Date('2025-03-28T15:25:00').toLocaleString('en-US', { hour: '2-digit', minute: '2-digit' }),
+    startTime: new Date('2026-04-17T14:20:00').toLocaleString('en-US', { hour: '2-digit', minute: '2-digit' }),
+    endTime: new Date('2026-04-17T15:20:00').toLocaleString('en-US', { hour: '2-digit', minute: '2-digit' }),
     speakers: '',
     title: 'Networking & Corporate Coffee Chats',
     location: 'Kresge Suites',
   },
   {
+    id: 10,
+    startTime: new Date('2026-04-17T15:20:00').toLocaleString('en-US', { hour: '2-digit', minute: '2-digit' }),
+    endTime: new Date('2026-04-17T16:00:00').toLocaleString('en-US', { hour: '2-digit', minute: '2-digit' }),
+    speakers: [
+      { name: 'Melissa Mash', title: 'Co-founder and CEO of Dagne Dover'},
+    ],
+    title: 'Fireside: Equity Through Entrepreneurship: Disrupting The Industry',
+    location: 'Robertson Auditorium',
+  },
+  {
     id: 11,
-    startTime: new Date('2025-03-28T15:25:00').toLocaleString('en-US', { hour: '2-digit', minute: '2-digit' }),
-    endTime: new Date('2025-03-28T16:00:00').toLocaleString('en-US', { hour: '2-digit', minute: '2-digit' }),
-    speakers: 'Emilie Rubenfeld | President of Carolina Herrera; (Moderator) Marcus Collins',
-    title: 'Steering a Fashion Legacy',
+    startTime: new Date('2026-04-17T16:00:00').toLocaleString('en-US', { hour: '2-digit', minute: '2-digit' }),
+    endTime: new Date('2026-04-17T16:50:00').toLocaleString('en-US', { hour: '2-digit', minute: '2-digit' }),
+    speakers: [
+      { name: 'Danielle Guizio', title: 'CEO + Designer of Guizio' },
+      { name: 'Francesca Aiello', title: 'Founder and Chief Executive Officer of Frankies Bikinis' },
+      { name: 'Elena Bonvicini', title: 'Founder and Creative Director of EB Denim' },
+      { name: 'Jessica Williams', title: 'Head of Brand Marketing & Partnerships of Shopify' }
+    ],
+    title: 'Vision to Venture: Young Founders in Fashion',
     location: 'Robertson Auditorium',
   },
   {
     id: 12,
-    startTime: new Date('2025-03-28T16:05:00').toLocaleString('en-US', { hour: '2-digit', minute: '2-digit' }),
-    endTime: new Date('2025-03-28T16:40:00').toLocaleString('en-US', { hour: '2-digit', minute: '2-digit' }),
-    speakers: 'Paige Lorenze | Founder, Entrepreneur, and Digital Creator; (Moderator) Rachel Liebenthal | Chief Brand Officer of Dairy Boy',
-    title: 'The Business of Being You: Scaling Influence and Lifestyle into a Lasting Brand',
-    location: 'Robertson Auditorium',
-  },
-  {
-    id: 13,
-    startTime: new Date('2025-03-28T16:40:00').toLocaleString('en-US', { hour: '2-digit', minute: '2-digit' }),
-    endTime: new Date('2025-03-28T16:50:00').toLocaleString('en-US', { hour: '2-digit', minute: '2-digit' }),
+    startTime: new Date('2026-04-17T16:50:00').toLocaleString('en-US', { hour: '2-digit', minute: '2-digit' }),
+    endTime: new Date('2026-04-17T17:00:00').toLocaleString('en-US', { hour: '2-digit', minute: '2-digit' }),
     speakers: '',
     title: 'Fashion Forward Showcase Award Ceremony',
     location: 'Robertson Auditorium',
   },
   {
-    id: 14,
-    startTime: new Date('2025-03-28T16:50:00').toLocaleString('en-US', { hour: '2-digit', minute: '2-digit' }),
-    endTime: new Date('2025-03-28T17:00:00').toLocaleString('en-US', { hour: '2-digit', minute: '2-digit' }),
-    speakers: 'Kylie Stenzler | COO of MFMS',
+    id: 13,
+    startTime: new Date('2026-04-17T17:00:00').toLocaleString('en-US', { hour: '2-digit', minute: '2-digit' }),
+    endTime: new Date('2026-04-17T17:10:00').toLocaleString('en-US', { hour: '2-digit', minute: '2-digit' }),
+    speakers: [
+      { name: 'Mani Carnes', title: 'COO of MFMS' }
+    ],
     title: 'Closing Remarks',
     location: 'Robertson Auditorium',
   },
 ];
-
-// Helper function to format speakers text with line breaks
-const formatSpeakers = (speakersText) => {
-  if (!speakersText) return '';
-  
-  // Replace commas with line breaks
-  return speakersText.split(',').map(speaker => speaker.trim()).join('\n');
-};
-
 
 export function loadSchedule() {
   return {
