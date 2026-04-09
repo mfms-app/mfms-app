@@ -12,7 +12,13 @@ import {
 } from 'react-native';
 import AppText from '../../components/Text';
 import { colors } from '../../styles';
-import { firebaseAuth } from '../../services/firebase';
+import RNSButton from '../../components/Button';
+import { 
+  getAuth, 
+  signInWithEmailAndPassword, 
+  createUserWithEmailAndPassword, 
+  sendPasswordResetEmail 
+} from '@react-native-firebase/auth';
 
 export default function AuthScreen() {
   const [mode, setMode] = React.useState('login'); // login | signup | forgot
@@ -22,6 +28,7 @@ export default function AuthScreen() {
 
   const isSignup = mode === 'signup';
   const isForgot = mode === 'forgot';
+  const authInstance = getAuth();
 
   const submit = async () => {
     const trimmedEmail = email.trim();
@@ -33,14 +40,15 @@ export default function AuthScreen() {
     setBusy(true);
     try {
       if (isForgot) {
-        await firebaseAuth.sendPasswordResetEmail(trimmedEmail);
+        // 3. Update to Modular Syntax: function(instance, data)
+        await sendPasswordResetEmail(authInstance, trimmedEmail);
         Alert.alert('Check your email', 'Password reset email sent.');
         setMode('login');
         setPassword('');
       } else if (isSignup) {
-        await firebaseAuth.createUserWithEmailAndPassword(trimmedEmail, password);
+        await createUserWithEmailAndPassword(authInstance, trimmedEmail, password);
       } else {
-        await firebaseAuth.signInWithEmailAndPassword(trimmedEmail, password);
+        await signInWithEmailAndPassword(authInstance, trimmedEmail, password);
       }
     } catch (e) {
       Alert.alert('Authentication error', e?.message || 'Something went wrong.');
@@ -63,7 +71,7 @@ export default function AuthScreen() {
         </View>
 
         <View style={styles.card}>
-          <AppText variant="caption" style={styles.label}>
+          <AppText variant="body" style={styles.label}>
             Email
           </AppText>
           <TextInput
@@ -79,7 +87,7 @@ export default function AuthScreen() {
 
           {!isForgot ? (
             <>
-              <AppText variant="caption" style={styles.label}>
+              <AppText variant="body" style={styles.label}>
                 Password
               </AppText>
               <TextInput
@@ -92,31 +100,25 @@ export default function AuthScreen() {
               />
             </>
           ) : null}
-
-          <TouchableOpacity
-            style={[styles.primaryButton, busy && styles.primaryButtonDisabled]}
+          <RNSButton
+            caption={isForgot ? 'Send reset email' : isSignup ? 'Sign up' : 'Log in'}
+            bordered
+            primary
+            large
             onPress={submit}
-            disabled={busy}
-          >
-            {busy ? (
-              <ActivityIndicator color={colors.white} />
-            ) : (
-              <AppText variant="h3" style={styles.primaryButtonText}>
-                {isForgot ? 'Send reset email' : isSignup ? 'Sign up' : 'Log in'}
-              </AppText>
-            )}
-          </TouchableOpacity>
+            style={styles.primaryButton}
+          /> 
 
           <View style={styles.linksRow}>
             {mode !== 'login' ? (
               <TouchableOpacity onPress={() => setMode('login')} disabled={busy}>
-                <AppText variant="caption" style={styles.link}>
+                <AppText variant="body" style={styles.link}>
                   Back to login
                 </AppText>
               </TouchableOpacity>
             ) : (
               <TouchableOpacity onPress={() => setMode('forgot')} disabled={busy}>
-                <AppText variant="caption" style={styles.link}>
+                <AppText variant="body" style={styles.link}>
                   Forgot password?
                 </AppText>
               </TouchableOpacity>
@@ -124,7 +126,7 @@ export default function AuthScreen() {
 
             {mode === 'login' ? (
               <TouchableOpacity onPress={() => setMode('signup')} disabled={busy}>
-                <AppText variant="caption" style={styles.link}>
+                <AppText variant="body" style={styles.link}>
                   Create account
                 </AppText>
               </TouchableOpacity>
@@ -163,11 +165,9 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   card: {
-    borderWidth: 1,
-    borderColor: colors.black,
-    borderRadius: 12,
     padding: 16,
     backgroundColor: colors.white,
+    padding: 20,
   },
   label: {
     color: colors.blue,
@@ -181,21 +181,12 @@ const styles = StyleSheet.create({
     paddingVertical: Platform.OS === 'ios' ? 12 : 10,
     color: colors.black,
     marginBottom: 14,
+    fontSize: 17,
   },
   primaryButton: {
-    backgroundColor: colors.blue,
-    borderRadius: 12,
-    paddingVertical: 12,
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginTop: 6,
-  },
-  primaryButtonDisabled: {
-    opacity: 0.7,
-  },
-  primaryButtonText: {
-    color: colors.white,
-    textAlign: 'center',
+    alignSelf: 'center',
+    width: '100%',
+    marginTop: 10,
   },
   linksRow: {
     marginTop: 14,
