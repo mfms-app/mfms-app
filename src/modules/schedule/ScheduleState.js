@@ -14,8 +14,9 @@ const schedule = [
     startTime: new Date('2026-04-17T08:30:00').toLocaleString('en-US', { hour: '2-digit', minute: '2-digit' }),
     endTime: new Date('2026-04-17T09:20:00').toLocaleString('en-US', { hour: '2-digit', minute: '2-digit' }),
     speakers: '',
-    title: 'Check-In',
-    location: 'Ross Winter Garden',
+    title: 'Check-In Begins',
+    location: '',
+    description: 'Arrive, pick up your badge, and get settled before the summit begins.',
   },
   {
     id: 1,
@@ -112,8 +113,9 @@ const schedule = [
     startTime: new Date('2026-04-17T14:20:00').toLocaleString('en-US', { hour: '2-digit', minute: '2-digit' }),
     endTime: new Date('2026-04-17T15:20:00').toLocaleString('en-US', { hour: '2-digit', minute: '2-digit' }),
     speakers: '',
-    title: 'Networking & Corporate Coffee Chats',
-    location: 'Kresge Suites',
+    title: 'Networking Hour (starts at 2:20 pm)',
+    location: '',
+    description: 'Networking block; mingle and connect with attendees and speakers.',
   },
   {
     id: 10,
@@ -143,8 +145,9 @@ const schedule = [
     startTime: new Date('2026-04-17T16:50:00').toLocaleString('en-US', { hour: '2-digit', minute: '2-digit' }),
     endTime: new Date('2026-04-17T17:00:00').toLocaleString('en-US', { hour: '2-digit', minute: '2-digit' }),
     speakers: '',
-    title: 'Fashion Forward Showcase Award Ceremony',
-    location: 'Robertson Auditorium',
+    title: 'FFS ANNOUNCEMENT',
+    location: '',
+    description: 'Fashion Forward Showcase announcement.',
   },
   {
     id: 13,
@@ -170,7 +173,29 @@ export default function ScheduleReducer(state = defaultState, action) {
     case LOAD_SCHEDULE:
       return {
         ...state,
-        schedule: action.schedule,
+        schedule: action.schedule.map((s) => {
+          const startDateTimeISO = s.startDateTimeISO || null;
+          const endDateTimeISO = s.endDateTimeISO || null;
+          const startTime =
+            s.startTime ||
+            (startDateTimeISO
+              ? new Date(startDateTimeISO).toLocaleString('en-US', { hour: '2-digit', minute: '2-digit' })
+              : '');
+          const endTime =
+            s.endTime ||
+            (endDateTimeISO
+              ? new Date(endDateTimeISO).toLocaleString('en-US', { hour: '2-digit', minute: '2-digit' })
+              : '');
+
+          return {
+            ...s,
+            startDateTimeISO,
+            endDateTimeISO,
+            startTime,
+            endTime,
+            description: s.description || '',
+          };
+        }),
         isLoading: false,
       };
     case TOGGLE_SESSION:

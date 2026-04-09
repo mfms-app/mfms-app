@@ -1,6 +1,7 @@
 import HomeScreen from '../home/HomeViewContainer';
 import SummitScreen from '../summit/SummitView';
 import AboutScreen from '../about/AboutViewContainer';
+import ProfileRootScreen from '../profile/ProfileRootScreen';
 import PublicationsScreen from '../publications/PublicationsView';
 
 const iconHome = require('../../../assets/images/home.png');
@@ -32,7 +33,7 @@ const tabNavigationData = [
   },
   {
     name: 'Profile',
-    component: AboutScreen,
+    component: ProfileRootScreen,
     icon: iconProfile,
   },
 ];
