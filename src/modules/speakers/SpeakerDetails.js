@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, Image, StyleSheet, ScrollView } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import { colors, fonts } from '../../styles';
+import { colors } from '../../styles';
 
 const SpeakerDetails = ({ route }) => {
   const navigation = useNavigation();

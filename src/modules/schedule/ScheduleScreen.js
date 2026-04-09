@@ -1,10 +1,14 @@
 import React,  { useState } from 'react';
-import { StyleSheet, View, Text, TouchableOpacity, ScrollView, Linking } from 'react-native';
+import { StyleSheet, View, TouchableOpacity, ScrollView, Linking } from 'react-native';
 import { colors, fonts } from '../../styles';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import AppText from '../../components/Text';
+import { useNavigation } from '@react-navigation/native';
+
+import {speakers as speakerData} from '../speakers/SpeakerData';
+import border from 'victory-native/lib/components/victory-primitives/border';
 
 export default function ScheduleScreen({ schedule, selectedSessions, loadSchedule }) {
-  const [isPressed, setIsPressed] = useState(false);
   const [expandedSession, setExpandedSession] = useState(null);
 
   React.useEffect(() => {
@@ -13,41 +17,46 @@ export default function ScheduleScreen({ schedule, selectedSessions, loadSchedul
   const toggleDropdown = (sessionId) => {
     setExpandedSession(expandedSession === sessionId ? null : sessionId);
   };
+  const navigation = useNavigation();
+  const renderFormattedSpeakers = (speakersArray) => {
 
-  const formatSpeakers = (speakersText) => {
-    if (!speakersText) return [];
-    
-    // Split the text by commas to get individual speakers
-    const speakerParts = speakersText.split(';').map(speaker => speaker.trim());
-    
-    // Process each speaker to separate name and title
-    return speakerParts.map(speaker => {
-      if (speaker.includes('|')) {
-        // If there's a pipe, split into name and title
-        const [name, title] = speaker.split('|').map(part => part.trim());
-        return { name, title };
+  const fullSpeakerObject = (speakerName) => {
+    return speakerData.find(
+      (s) => s.name.toLowerCase() === speakerName.toLowerCase()
+    );
+  }
+
+  const handlePress = (speakerName) => {
+      const speaker = fullSpeakerObject(speakerName);
+      if (speaker) {
+        // This will now use the 'navigation' defined at the top level
+        navigation.navigate('SpeakerDetails', { speaker: speaker }); 
       } else {
-        // If no pipe, just use the whole text as name
-        return { name: speaker, title: null };
+        console.warn(`No data found for speaker: ${speakerName}`);
       }
-    });
-  };
+    };
 
-  const renderFormattedSpeakers = (speakersArray) => (
+  return (
     <View style={styles.speakersContainer}>
       {speakersArray.map((speaker, index) => (
-        <View key={index} style={styles.speakerItem}>
-          {/* Left-aligned text container */}
+        <TouchableOpacity 
+          key={index} 
+          style={fullSpeakerObject(speaker.name) ? styles.speakerItem: styles.noLinkSpeakerItem}
+          // Pass the name to the handler to perform the lookup
+          onPress={() => handlePress(speaker.name)}
+          activeOpacity={0.7}
+        >
           <View style={styles.speakerTextContainer}>
-            <Text style={styles.speakerName}>{speaker.name}</Text>
+            <AppText variant='h3'>{speaker.name}</AppText>
             {speaker.title && (
-              <Text style={styles.speakerTitle}>{speaker.title}</Text>
+              <AppText variant='caption'>{speaker.title}</AppText>
             )}
           </View>
-        </View>
+        </TouchableOpacity>
       ))}
     </View>
   );
+};
 
   const renderSession = (session) => (
     <View
@@ -65,9 +74,9 @@ export default function ScheduleScreen({ schedule, selectedSessions, loadSchedul
       >
         <View style={styles.sessionHeader}>
           <View style={styles.sessionTextContainer}>
-            <Text style={styles.time}>{session.startTime} - {session.endTime}</Text>
-            <Text style={styles.title}>{session.title}</Text>
-            <Text style={styles.location}>{session.location}</Text>
+            <AppText variant='bodyBlue'>{session.startTime} - {session.endTime}</AppText>
+            <AppText variant='h2'>{session.title}</AppText>
+            <AppText variant='body'>{session.location}</AppText>
           </View>
           
           {/* Only show dropdown icon if speakers exist */}
@@ -84,7 +93,7 @@ export default function ScheduleScreen({ schedule, selectedSessions, loadSchedul
         
         {/* Speakers section with italics for titles */}
         {expandedSession === session.id && session.speakers && (
-          renderFormattedSpeakers(formatSpeakers(session.speakers))
+          renderFormattedSpeakers(session.speakers)
         )}
       </TouchableOpacity>
     </View>
@@ -93,7 +102,7 @@ export default function ScheduleScreen({ schedule, selectedSessions, loadSchedul
   return (
     <View style={styles.container}>  
       <ScrollView>
-        <Text style={styles.header}>Schedule</Text>
+        <AppText variant='h1' style={styles.header}>Schedule</AppText>
         <View style={styles.divider} />        
         {schedule.map(renderSession)}
       </ScrollView>
@@ -108,11 +117,7 @@ const styles = StyleSheet.create({
     paddingTop: 25,
   },
   header:{
-    fontFamily: "NeueHaasDisplayRoman",
-    fontSize: 36,
-    fontWeight: '600', //semi-bold
     textAlign: 'center',
-    color: colors.black,
     marginHorizontal: 20,
   },
   divider: {
@@ -176,9 +181,24 @@ const styles = StyleSheet.create({
     alignItems: 'flex-start', // Change to flex-start to align to the left
   },
   speakerItem: {
-    marginBottom: 8,
-    width: '100%', 
-    alignItems: 'flex-start', // Change to flex-start to align to the left
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: colors.white,
+    padding: 16,
+    marginBottom: 12,
+    borderRadius: 12,
+    // Shadow for iOS
+    shadowColor: colors.black,
+    shadowOffset: { width: 0, height: 3 },
+    shadowOpacity: 0.2,
+    shadowRadius: 6,
+    width: '100%',
+  },
+  noLinkSpeakerItem: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingLeft: 16,
+    marginVertical: 5,
   },
   speakerName: {
     fontFamily: "NeueHaasDisplayRoman",
@@ -244,25 +264,4 @@ const styles = StyleSheet.create({
     paddingTop: 2, // Align icon vertically with the time text
     paddingLeft: 8,
   },
-  // button: {
-  //   backgroundColor: "#F4F4F2",
-  //   paddingVertical: 12,
-  //   paddingHorizontal: 16,
-  //   borderRadius: 10,
-  //   shadowColor: colors.gray,
-  //   shadowOffset: { width: 0, height: 2 },
-  //   shadowOpacity: 0.5,
-  //   shadowRadius: 4,
-  //   alignSelf: 'center',
-  //   marginVertical: 20,
-  //   marginHorizontal: 20,
-  // },
-  // buttonText: {
-  //   color: colors.black,
-  //   fontWeight: 'bold',
-  //   textAlign: 'center',
-  //   fontSize: 16,
-  //   fontFamily: "NeueHaasDisplayRoman",
-  // },
-
 }); 

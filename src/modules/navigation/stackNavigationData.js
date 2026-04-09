@@ -9,6 +9,7 @@ import TicketsContainer from '../tickets/TicketsViewContainer';
 import FAQPage from '../faq/FAQInfoView';
 import PartnersScreen from '../partners/PartnersInfoView';
 import SpeakerDetails from '../speakers/SpeakerDetails';
+import ContactViewScreen from '../contact/ContactView';
 
 import { colors, fonts } from '../../styles';
 
@@ -95,6 +96,13 @@ const StackNavigationData = [
     headerLeft: headerLeftComponent,
     headerBackground: { source: headerBackground },
   },
+  {
+    name: 'Contact',
+    component: ContactViewScreen,
+    headerLeft: headerLeftComponent,
+    headerBackground: { source: headerBackground },
+  },
+
 ]
 
 export default StackNavigationData;
