@@ -16,7 +16,7 @@ import { colors } from '../../styles';
 
 const profileKey = (uid) => `profile:${uid}`;
 
-export default function EditProfileScreen({ user, onDone }) {
+export default function EditProfileScreen({ user, onDone, omitInScreenHeader = false }) {
   const [busy, setBusy] = React.useState(false);
   const [profile, setProfile] = React.useState({
     displayName: '',
@@ -80,12 +80,14 @@ export default function EditProfileScreen({ user, onDone }) {
         behavior={Platform.OS === 'ios' ? 'padding' : undefined}
       >
         <ScrollView contentContainerStyle={styles.container} showsVerticalScrollIndicator={false}>
-          <View style={styles.header}>
-            <AppText variant="h1" style={styles.title}>
-              Edit Profile
-            </AppText>
-            <View style={styles.divider} />
-          </View>
+          {!omitInScreenHeader ? (
+            <View style={styles.header}>
+              <AppText variant="h1" style={styles.title}>
+                Edit Profile
+              </AppText>
+              <View style={styles.divider} />
+            </View>
+          ) : null}
 
           <View style={styles.card}>
             <Field
@@ -125,7 +127,7 @@ export default function EditProfileScreen({ user, onDone }) {
               </AppText>
             </TouchableOpacity>
 
-            <TouchableOpacity style={styles.secondaryButton} onPress={onDone} disabled={busy}>
+            <TouchableOpacity style={styles.secondaryButton} onPress={() => onDone?.()} disabled={busy}>
               <AppText variant="caption" style={styles.secondaryButtonText}>
                 Cancel
               </AppText>

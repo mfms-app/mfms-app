@@ -1,7 +1,7 @@
 PODS:
   - boost (1.83.0)
-  - BVLinearGradient (2.5.6):
-    - React
+  - BVLinearGradient (2.8.3):
+    - React-Core
   - DoubleConversion (1.1.6)
   - FBLazyVector (0.73.1)
   - FBReactNativeSpec (0.73.1):
@@ -936,16 +936,16 @@ PODS:
     - React-debug
   - react-native-safe-area-context (0.7.3):
     - React
-  - react-native-video (6.10.2):
+  - react-native-video (6.19.1):
     - glog
     - RCT-Folly (= 2022.05.16.00)
     - React-Core
-    - react-native-video/Video (= 6.10.2)
-  - react-native-video/Video (6.10.2):
+    - react-native-video/Video (= 6.19.1)
+  - react-native-video/Video (6.19.1):
     - glog
     - RCT-Folly (= 2022.05.16.00)
     - React-Core
-  - react-native-webview (13.12.5):
+  - react-native-webview (13.16.1):
     - glog
     - RCT-Folly (= 2022.05.16.00)
     - React-Core
@@ -1119,9 +1119,9 @@ PODS:
   - ReactNativeUiLib (3.41.0):
     - React
   - RecaptchaInterop (101.0.0)
-  - RNCAsyncStorage (1.19.0):
+  - RNCAsyncStorage (1.24.0):
     - React-Core
-  - RNCMaskedView (0.1.10):
+  - RNCMaskedView (0.1.11):
     - React
   - RNFBApp (24.0.0):
     - Firebase/CoreOnly (= 12.10.0)
@@ -1134,9 +1134,9 @@ PODS:
     - RCT-Folly (= 2022.05.16.00)
     - React-Core
     - RNFBApp
-  - RNGestureHandler (1.8.0):
-    - React
-  - RNLocalize (1.4.2):
+  - RNGestureHandler (1.10.3):
+    - React-Core
+  - RNLocalize (1.4.3):
     - React-Core
   - RNNotifee (9.1.8):
     - React-Core
@@ -1145,9 +1145,9 @@ PODS:
     - React-Core
   - RNReanimated (1.13.4):
     - React-Core
-  - RNScreens (2.11.0):
-    - React
-  - RNVectorIcons (10.0.3):
+  - RNScreens (2.18.1):
+    - React-Core
+  - RNVectorIcons (10.3.0):
     - glog
     - RCT-Folly (= 2022.05.16.00)
     - React-Core
@@ -1374,7 +1374,7 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   boost: 90764e649b3a6530488ae5073001a133a5cab7b8
-  BVLinearGradient: 44fd36b87f318e7933c4c91a6991442a5e3f5bcf
+  BVLinearGradient: cb006ba232a1f3e4f341bb62c42d1098c284da70
   DoubleConversion: fea03f2699887d960129cc54bba7e52542b6f953
   FBLazyVector: 2296bacb2fa157a43991048b0a9d71c1c8b65083
   FBReactNativeSpec: df0ebe69acd14ce0be0269cf75b6e338a727259b
@@ -1413,8 +1413,8 @@ SPEC CHECKSUMS:
   React-logger: c6cc01d7cff5f77924db08c7fbaf5a4d7a9ab857
   React-Mapbuffer: 5255b6d24f741e44e7a7ddbf1f494b7c25890eed
   react-native-safe-area-context: 1b229872ad5eefde82f117a6a2c97a7f71717537
-  react-native-video: a1ea2e400bf6dce6212dbdc4f7d72f4e4b5e605f
-  react-native-webview: c669066263a4cd1474745d2c8c451cad438d38d7
+  react-native-video: cfee8186dc8880141847aa7346eb933328f065e9
+  react-native-webview: f393fb37becc17a159638c7dedb50f8d5bfa7358
   React-nativeconfig: a8685fce6d0ffbb77b1fe983895dbbc7bfe949ad
   React-NativeModulesApple: a3dc48b47f71ee37e80db713bd65d6a2de920916
   React-perflogger: 5ffc4d6ccb74eaac7b8b2867e58a447232483d6d
@@ -1437,16 +1437,16 @@ SPEC CHECKSUMS:
   ReactCommon: a1f2941d66adaf304650f165f8addc976ff692c1
   ReactNativeUiLib: 20cd1f45c40fd497ff547abd4d3a52fe519f4d5a
   RecaptchaInterop: 11e0b637842dfb48308d242afc3f448062325aba
-  RNCAsyncStorage: b33ba15f623939b6e244cbb93863bcf01c409e0f
-  RNCMaskedView: f547d4e28ae25ea4a25e5a26033dc99558013e1f
+  RNCAsyncStorage: b6410dead2732b5c72a7fdb1ecb5651bbcf4674b
+  RNCMaskedView: 4c5ee1c8667d56077246cc6d1977f77393923560
   RNFBApp: 170826267283056a1550e0b17ea25e1fee377b43
   RNFBAuth: 631698fbd6b3f34b31881ef952faf68f25bea83e
-  RNGestureHandler: 598afd31373eba0f9a59a1fa9f4c067f138e1262
-  RNLocalize: bb0c3cc01f982d9de5c57cf2335dfa540f3ba1c1
+  RNGestureHandler: 6572a5f44759900730562b418da289c373de8d06
+  RNLocalize: 1b5c060db74265245b61fe665572b03bdaa0ab82
   RNNotifee: 5e3b271e8ea7456a36eec994085543c9adca9168
   RNReanimated: e6eff6f3edc00e1de90a54b21306e03f6b8706a7
-  RNScreens: b2795b1ec878c0ff89142ad65c6b1de527b87044
-  RNVectorIcons: 3e46e4661284b713090ca9551aafa829e7f34cdb
+  RNScreens: 6a2106686e0de9866ab14ca250d7e47a49416b51
+  RNVectorIcons: 433d2e7249acbcd2921118a2ea5f254cba798d31
   SocketRocket: f32cd54efbe0f095c4d7594881e52619cfe80b17
   toolbar-android: c426ed5bd3dcccfed20fd79533efc0d1ae0ef018
   Yoga: 4f53dc50008d626fa679c7a1cb4bed898f8c0bde

@@ -31,7 +31,7 @@ const drawerData = [
   // {
   //   name: 'Resume Drop',
   //   icon: iconResumeDrop,
-  //   onPress: () => Linking.openURL('https://forms.gle/1YXDsY7ktsLKc2GR7'),
+  //   onPress: () => Linking.openURL('https://docs.google.com/forms/d/e/1FAIpQLScRTC0E6jIQSaYA5ctiN2ivL3JrTD2m8rT5zcWJTBPz8s2rPQ/viewform'),
   // },
   {
     name: 'FAQ',
