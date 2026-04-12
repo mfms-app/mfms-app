@@ -1,6 +1,6 @@
-import React, {useRef } from 'react';
-import { StyleSheet, View, ScrollView, Dimensions} from 'react-native';
-import { fonts, colors } from '../../styles';
+import React, { useRef } from 'react';
+import { StyleSheet, View, ScrollView } from 'react-native';
+import { colors } from '../../styles';
 import Video from 'react-native-video';
 import AppText from '../../components/Text.js';
 import ContentGrid from '../../components/ContentGrid.js';
@@ -27,7 +27,7 @@ const homeContent = [
     link: 'home'
   },
 ]
-export default function HomeScreen({ navigation }) {
+export default function HomeScreen() {
   const videoRef = useRef(null);
   return (
     <ScrollView style={styles.container} showsVerticalScrollIndicator={false} >

@@ -1,6 +1,7 @@
 import React from 'react';
 import {
   Alert,
+  Image,
   KeyboardAvoidingView,
   Platform,
   SafeAreaView,
@@ -10,52 +11,69 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useNavigation } from '@react-navigation/native';
 import AppText from '../../components/Text';
 import { colors } from '../../styles';
+import { firebaseAuth } from '../../services/firebase';
+import defaultProfileAvatar from './defaultProfileAvatar';
+import { loadStoredProfile, saveStoredProfile } from './profileStorage';
+import { pickProfilePhoto } from './pickProfilePhoto';
 
-const profileKey = (uid) => `profile:${uid}`;
+const emptyProfile = () => ({
+  firstName: '',
+  lastName: '',
+  photoBase64: '',
+  company: '',
+  roleTitle: '',
+  bio: '',
+  phone: '',
+});
 
 export default function EditProfileScreen({ user, onDone, omitInScreenHeader = false }) {
+  const navigation = useNavigation();
   const [busy, setBusy] = React.useState(false);
-  const [profile, setProfile] = React.useState({
-    displayName: '',
-    company: '',
-    roleTitle: '',
-    bio: '',
-    phone: '',
-  });
+  const [profile, setProfile] = React.useState(emptyProfile);
 
   React.useEffect(() => {
-    let mounted = true;
     const load = async () => {
       setBusy(true);
       try {
-        const raw = await AsyncStorage.getItem(profileKey(user.uid));
-        if (!mounted) return;
-        if (raw) setProfile((p) => ({ ...p, ...JSON.parse(raw) }));
+        const stored = await loadStoredProfile(user.uid);
+        setProfile({ ...emptyProfile(), ...stored });
       } catch (e) {
         // ignore
       } finally {
-        if (mounted) setBusy(false);
+        setBusy(false);
       }
     };
-    load();
-    return () => {
-      mounted = false;
-    };
-  }, [user.uid]);
+    const unsub = navigation.addListener('focus', load);
+    return unsub;
+  }, [navigation, user.uid]);
 
   const save = async () => {
     setBusy(true);
     try {
-      await AsyncStorage.setItem(profileKey(user.uid), JSON.stringify(profile));
+      await saveStoredProfile(user.uid, profile);
+      const u = firebaseAuth.currentUser;
+      const fullName = `${profile.firstName.trim()} ${profile.lastName.trim()}`.trim();
+      if (u && fullName && typeof u.updateProfile === 'function') {
+        try {
+          await u.updateProfile({ displayName: fullName });
+        } catch (_) {
+          // local save already succeeded
+        }
+      }
       onDone?.();
     } catch (e) {
       Alert.alert('Save failed', e?.message || 'Something went wrong.');
     } finally {
       setBusy(false);
     }
+  };
+
+  const onChangePhoto = async () => {
+    const uri = await pickProfilePhoto();
+    if (uri) setProfile((p) => ({ ...p, photoBase64: uri }));
   };
 
   const Field = ({ label, value, onChangeText, multiline }) => (
@@ -90,10 +108,41 @@ export default function EditProfileScreen({ user, onDone, omitInScreenHeader = f
           ) : null}
 
           <View style={styles.card}>
+            <AppText variant="caption" style={styles.label}>
+              Photo
+            </AppText>
+            <TouchableOpacity
+              style={styles.photoPicker}
+              onPress={onChangePhoto}
+              disabled={busy}
+              activeOpacity={0.8}
+            >
+              <Image
+                source={
+                  profile.photoBase64
+                    ? { uri: profile.photoBase64 }
+                    : defaultProfileAvatar
+                }
+                style={styles.photoPreview}
+              />
+              {!profile.photoBase64 ? (
+                <View style={styles.photoHintOverlay} pointerEvents="none">
+                  <AppText variant="caption" style={styles.photoHintText}>
+                    Tap to add photo
+                  </AppText>
+                </View>
+              ) : null}
+            </TouchableOpacity>
+
             <Field
-              label="Name"
-              value={profile.displayName}
-              onChangeText={(t) => setProfile((p) => ({ ...p, displayName: t }))}
+              label="First name"
+              value={profile.firstName}
+              onChangeText={(t) => setProfile((p) => ({ ...p, firstName: t }))}
+            />
+            <Field
+              label="Last name"
+              value={profile.lastName}
+              onChangeText={(t) => setProfile((p) => ({ ...p, lastName: t }))}
             />
             <Field
               label="Company"
@@ -180,6 +229,35 @@ const styles = StyleSheet.create({
     color: colors.blue,
     marginBottom: 6,
   },
+  photoPicker: {
+    width: 120,
+    height: 120,
+    borderRadius: 60,
+    alignSelf: 'center',
+    borderWidth: 2,
+    borderColor: colors.blue,
+    overflow: 'hidden',
+    marginBottom: 8,
+    backgroundColor: colors.white,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  photoPreview: {
+    width: '100%',
+    height: '100%',
+  },
+  photoHintOverlay: {
+    ...StyleSheet.absoluteFillObject,
+    backgroundColor: 'rgba(255,255,255,0.55)',
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingHorizontal: 8,
+  },
+  photoHintText: {
+    color: colors.blue,
+    textAlign: 'center',
+    fontWeight: '600',
+  },
   input: {
     borderWidth: 1,
     borderColor: colors.black,
@@ -214,4 +292,3 @@ const styles = StyleSheet.create({
     textDecorationLine: 'underline',
   },
 });
-
