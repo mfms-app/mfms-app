@@ -113,13 +113,12 @@ export default function ScheduleScreen({
           <View style={styles.sessionHeaderActions}>
             <TouchableOpacity
               onPress={() => onFavoritePress(session)}
-              style={[styles.favoriteHeartButton, isFavorite && styles.favoriteHeartButtonActive]}
               accessibilityLabel={isFavorite ? 'Remove from favorites' : 'Add to favorites'}
             >
               <Icon
                 name={isFavorite ? 'heart' : 'heart-o'}
                 size={20}
-                color={isFavorite ? colors.white : colors.blue}
+                color={colors.blue}
               />
             </TouchableOpacity>
             {hasSpeakers ? (
@@ -137,23 +136,22 @@ export default function ScheduleScreen({
             ) : null}
           </View>
         </View>
-        
-        {/* Speakers section with italics for titles */}
-        {expandedSession === session.id && session.speakers && (
+
+        {expandedSession === session.id && hasSpeakers ? (
           <View>
             {renderFormattedSpeakers(session.speakers)}
-            {session.description ? (
+            {session.description && (
               <View style={styles.sessionDescriptionContainer}>
                 <AppText variant='body' style={styles.sessionDescription}>
                   {session.description}
                 </AppText>
               </View>
-            ) : null}
+            )}
           </View>
-        )}
-      </TouchableOpacity>
-    </View>
-  );
+        ) : null}
+      </View>
+    );
+  };
 
   return (
     <View style={styles.container}>  
@@ -271,18 +269,6 @@ const styles = StyleSheet.create({
     marginTop: 2,
     textAlign: 'left', // Change to left alignment
   },
-  sessionDescriptionContainer: {
-    marginTop: 12,
-    paddingTop: 12,
-    borderTopWidth: 1,
-    borderTopColor: colors.gray + '30',
-  },
-  sessionDescription: {
-    fontFamily: "NeueHaasDisplayRoman",
-    fontSize: 15,
-    color: colors.darkGray,
-    lineHeight: 22,
-  },
   location: {
     marginTop: 7,
     fontFamily: "NeueHaasDisplayRoman",
@@ -333,8 +319,7 @@ const styles = StyleSheet.create({
   },
   sessionHeaderActions: {
     alignItems: 'center',
-    justifyContent: 'flex-start',
-    paddingTop: 2,
+    justifyContent: 'space-between',
   },
   favoriteHeartButton: {
     borderWidth: 1,
@@ -345,11 +330,20 @@ const styles = StyleSheet.create({
     backgroundColor: colors.white,
     marginBottom: 6,
   },
-  favoriteHeartButtonActive: {
-    backgroundColor: colors.blue,
-  },
   chevronButton: {
     paddingHorizontal: 4,
     paddingVertical: 2,
+  },
+  sessionDescriptionContainer: {
+    marginTop: 12,
+    paddingTop: 12,
+    borderTopWidth: 1,
+    borderTopColor: colors.gray + '30',
+  },
+  sessionDescription: {
+    fontFamily: "NeueHaasDisplayRoman",
+    fontSize: 15,
+    color: colors.darkGray,
+    lineHeight: 22,
   },
 }); 
