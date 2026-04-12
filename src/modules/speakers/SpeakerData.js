@@ -1,3 +1,5 @@
+import { truncate } from 'lodash';
+
 export const speakers = [
   {
     id: '1',
@@ -114,28 +116,59 @@ export const speakers = [
     id: '16',
     name: 'Brandon Williams',
     title: 'Creative Director + Celebrity Stylist, Hudson Jeans',
-    image: '',
+    image: require('../../../assets/images/speakers/Brandon_Williams_Headshot.jpg'),
     description: "Brandon Williams is a Creative Director and celebrity stylist at the forefront of a new era in sports and fashion, known for shaping the modern image of the professional athlete. With a career rooted in styling elite talent, he has pioneered a distinct approach that blends personal style, cultural influence, and brand strategy—elevating athletes into multidimensional figures both on and off the field.\nWilliams currently serves as Creative Director for Hudson Jeans, where he leads the brand’s visual and creative direction across men’s and women’s collections. His work reflects a refined balance of heritage and modernity, bringing a fresh perspective to contemporary denim and lifestyle storytelling.\nOver the course of his career, Williams has worked with leading athletes including Mike Conley, Andrew Wiggins, Joel Embiid, Matt Barnes, Drew Holiday, Jack Flaherty, Dansby Swanson, and Mallory Swanson. Beyond styling, he has played a key role in shaping athlete branding and securing high-impact partnerships, contributing to campaigns and collaborations with global brands such as Nike.\nRecognized for his ability to translate identity into influence, Williams represents a new generation of creative leadership—where styling, direction, and strategy converge to define the future of sports and style."
   },
   {
     id: '17',
     name: 'Steve Shiffman',
     title: 'Strategic Advisor, Coach, & Former CEO of Calvin Klein',
-    image: '',
+    image: require('../../../assets/images/speakers/Steve_Shiffman_Headshot.png'),
     description: "Steve Shiffman is a visionary executive, strategic advisor, and global retail leader. With decades of experience spanning fashion, luxury, and consumer industries, Shiffman has built a reputation for driving growth, leading organizational change, and delivering sustained financial performance.\nSteve is best known for his tenure at Calvin Klein, where he served as CEO from 2014 to 2019. During this time, he led a comprehensive transformation of the global organization, overseeing more than 12,000 employees and modernizing operations across all regions. Under his leadership, the brand grew from $8 billion to $10 billion in retail sales, expanded across multiple channels including e-commerce and licensing, and significantly increased its global cultural relevance through data-driven marketing and a unified creative vision.\nThroughout his career, Steve has been recognized for his ability to combine strategic insight with operational excellence, fostering innovation while maintaining a strong focus on results. In addition to his executive work, he has served on several boards, supporting organizations across business and philanthropy. Today, he continues to advise, invest in, and mentor organizations seeking to navigate transformation and unlock long-term growth."
   },
   {
     id: '18',
     name: 'Ken Pilot',
     title: 'Founder of Ken Pilot Ventures',
-    image: '',
+    image: require('../../../assets/images/speakers/Ken_Pilot_Headshot.jpg'),
     description: "Ken Pilot, a veteran retail executive and strategic advisor, has transformed legacy brands and startups in the evolving retail landscape. With over 30 years at Gap, J.Crew, Ralph Lauren, and American Eagle, Ken is renowned for scaling global operations while fostering culture and innovation.\nHis leadership during Gap’s rise under Mickey Drexler solidified his status as a transformative merchant. In 2015, he founded Ken Pilot Ventures, investing in cutting-edge retail tech platforms like Ometria, Firework,Curated For You and Lily AI, focusing on enhancing customer experience and operational efficiency.\nKen’s advisory expertise is highly sought after, notably advising Steve Madden on store transformation and omnichannel integration, and working with Knot Standard, an AI-powered custom menswear brand. In 2023, Ken launched The Retail Pilot: Leaders & Legends podcast, featuring influential voices in retail and consumer leadership, quickly becoming essential listening for founders, executives, and aspiring entrepreneurs."
   },
   {
     id: '19',
     name: 'Kate Davidson Hudson',
     title: 'Founder + CEO of Vêtir',
-    image: '',
+    image: require('../../../assets/images/speakers/Kate_Davidson_Hudson_Headshot.jpg'),
     description: "Kate Davidson Hudson is the Founder and CEO of Vêtir, an AI-powered luxury styling platform redefining modern clienteling. Through a proprietary blend of artificial intelligence and stylist expertise, Vêtir delivers deeply personalized wardrobe solutions for clients, using contextual insights—such as destination, occasion, climate, and individual preference—to transform how luxury consumers discover and shop.\nWith more than 15 years shaping digital fashion media and ecommerce, Kate has built her career at the intersection of editorial authority, data-driven retail, and emerging technology. She co-founded Editorialist, one of the earliest successful content-driven commerce platforms in fashion, and is widely recognized as a pioneer in content-to-commerce and the evolution of luxury retail online.\nPrior to founding Vêtir, she served as Editor in Chief and Chief Development Officer at global luxury e-tailer LuisaViaRoma, where she launched the brand’s print magazine and digital editorial platform. She previously held senior editorial roles at ELLE and Harper’s Bazaar."
+  },
+  {
+    id: '20',
+    name: 'Ali Gropper',
+    title: 'MFMS Co-Founder, Celebrity Wardrobe Stylist & Co-Founder, Danielle & Alix',
+    image: require('../../../assets/images/speakers/Ali_Gropper_Headshot.png'),
+    description: "Ali Gropper’s life and career are a testament to resilience, adaptability, and the power of forging one’s own path. A proud alumna of the University of Michigan, where she majored in Communication & Media (Class of 2018), Ali’s journey to becoming a leading Celebrity Wardrobe Stylist is deeply rooted in her time at U of M.\nGoing into Ali’s senior year, she was passionate to pursue a career in the business of fashion. Leveraging her resources at the university, she created the first-ever fashion-focused program at the university: the Michigan Fashion Media Summit.\nAfter graduation, Ali explored various paths, from Celebrity Relations at global PR agencies to in-house VIP marketing. Her entrepreneurial spirit eventually led her to launch her own celebrity styling business, Danielle & Alix. The namesake brand specializes in styling red carpet events, street style moments, and campaigns for their VIP clientele, alongside their own collaborative partnerships with renowned brands such as Amazon, Revolve, Armani, Victoria’s Secret, and more. Ali’s expertise and influence has made her a recognized leader in the fashion landscape, named Forbes 30 Under 30 in the Art & Style Category."
+  },
+  {
+    id: '21',
+    name: 'Wade Bassock',
+    title: 'MFMS Co-President',
+    image: require('../../../assets/images/speakers/Wade_Bassock_Headshot.jpg'),
+    description: 'Wade (he/him) is a senior majoring in User Experience Design and Data Analytics at the School of Information. He joined the MFMS as a sophomore. After serving as the Co-Director of Summit Operations, he is excited to be one of the Co-Presidents this year. Wade’s experience includes interning at Bloomingdale’s and Swimm, an AI startup. Upon graduation, he will be returning to Bloomingdale’s Leadership Development Program in the New York City office. ',
+    mfms: true
+  },
+  {
+    id: '22',
+    name: 'Ryan Sweeney',
+    title: 'MFMS Co-President',
+    image: require('../../../assets/images/speakers/Ryan_Sweeney_Headshot.jpg'),
+    description: 'Ryan (he/him) is a senior majoring in Communication and Media with a minor in Business. He joined MFMS during his freshman year and has since held several positions on the marketing team, including Marketing Coordinator, Public Relations Manager, Director of Public Relations, and Marketing & Social Liaison. Now, he’s thrilled to be rounding out his time on the student planning team as one of its Co-Presidents. Professionally, Ryan works as a Support Lead, handling data entry for Acosta Sales & Marketing, a marketing agency serving the retail and food service industries. He has also gained experience as a Sales and Marketing Intern for Rebel Nell, a women-owned jewelry company based in Detroit. He also took on an editorial internship for Raandoom, a collaborative media platform that highlights global perspectives on fashion, lifestyle, and arts and culture. Looking ahead, Ryan hopes to pursue opportunities in the entertainment industry and plans to take his skills to Los Angeles after graduating from Michigan.',
+    mfms: true
+  },
+  {
+    id: '23',
+    name: 'Mani Carnes',
+    title: 'MFMS Chief Operating Officer',
+    image: require('../../../assets/images/speakers/Mani_Carnes_Headshot.jpg'),
+    description: "Mani (she/her) is a senior majoring in Business Administration with a minor in Native American Studies. She joined MFMS during her sophomore year. After serving as the External DEI Chair on the DEI Team, she is excited to dive into the role of COO for her final year on the team. Mani's professional experience includes interning at TINGE Beauty, a body makeup brand, as a content creation intern, working as a wholesale intern for Ferragamo, and as a business development intern at CLEAR this past summer.",
+    mfms: true
   }
   ];

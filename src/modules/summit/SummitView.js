@@ -28,8 +28,8 @@ const summitDashContent = [
   },
   {
     id: 3,
-    image: require('../../../assets/images/summitdash/PANELS.png'),
-    link: 'Panels'
+    image: require('../../../assets/images/summitdash/PARTNERS.png'),
+    link: 'Partners'
   },
   {
     id: 4,
@@ -70,17 +70,17 @@ const SummitScreen = () => {
         <AppText style={styles.text} variant='h2'>Additional Resources</AppText>
         <View style={styles.buttonRow}>
           <RNSButton
-            caption="Partners"
-            bordered
-            primary
-            onPress={() => navigation.navigate('Partners')}
-        />
-          <RNSButton
             caption="Resume Drop"
             bordered
             primary
             onPress={() => Linking.openURL(resumeDropLink)}
-        />
+          />
+          <RNSButton
+            caption="FAQ"
+            bordered
+            primary
+            onPress={() => navigation.navigate('FAQ')}
+          />
         </View>
         <View style={styles.buttonRow}>
           <RNSButton
@@ -88,13 +88,7 @@ const SummitScreen = () => {
             bordered
             primary
             onPress={() => Linking.openURL(pastSummitsLink)}
-        />
-          <RNSButton
-            caption="FAQ"
-            bordered
-            primary
-            onPress={() => navigation.navigate('FAQ')}
-        />
+          />
         </View>
         </ScrollView>
     </SafeAreaView>
