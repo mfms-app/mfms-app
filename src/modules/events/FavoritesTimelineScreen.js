@@ -3,14 +3,24 @@ import { connect } from 'react-redux';
 import { BaseTimelineScreen } from './TimelineScreen';
 import { toggleFavorite } from '../favorites/FavoritesState';
 
-function FavoritesTimelineScreen({ schedule, favoriteEventIds, toggleFavorite }) {
+function FavoritesTimelineScreen({
+  schedule,
+  favoriteEventIds,
+  toggleFavorite,
+  omitInScreenHeader = false,
+}) {
   const filtered = React.useMemo(
     () => (schedule || []).filter((e) => favoriteEventIds.includes(e.id)),
     [schedule, favoriteEventIds],
   );
 
   return (
-    <BaseTimelineScreen schedule={filtered} favoriteEventIds={favoriteEventIds} toggleFavorite={toggleFavorite} />
+    <BaseTimelineScreen
+      schedule={filtered}
+      favoriteEventIds={favoriteEventIds}
+      toggleFavorite={toggleFavorite}
+      omitInScreenHeader={omitInScreenHeader}
+    />
   );
 }
 

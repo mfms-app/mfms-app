@@ -6,7 +6,34 @@ import { colors } from '../../styles';
 import { toggleFavorite } from '../favorites/FavoritesState';
 import { cancelEventReminder, ensureNotificationsReady, scheduleEventReminder } from '../../services/notifications';
 
-export function BaseTimelineScreen({ schedule, favoriteEventIds, toggleFavorite }) {
+function speakersToDisplayText(speakers) {
+  if (speakers == null || speakers === '') return null;
+  if (typeof speakers === 'string') {
+    const t = speakers.trim();
+    return t.length ? t : null;
+  }
+  if (Array.isArray(speakers)) {
+    const lines = speakers
+      .map((s) => {
+        if (s != null && typeof s === 'object' && 'name' in s) {
+          const { name, title } = s;
+          if (title) return `${name} — ${title}`;
+          return name || '';
+        }
+        return String(s);
+      })
+      .filter(Boolean);
+    return lines.length ? lines.join('\n') : null;
+  }
+  return null;
+}
+
+export function BaseTimelineScreen({
+  schedule,
+  favoriteEventIds,
+  toggleFavorite,
+  omitInScreenHeader = false,
+}) {
   const sorted = React.useMemo(() => {
     const copy = [...(schedule || [])];
     copy.sort((a, b) => {
@@ -40,14 +67,18 @@ export function BaseTimelineScreen({ schedule, favoriteEventIds, toggleFavorite 
   return (
     <SafeAreaView style={styles.safeArea}>
       <ScrollView contentContainerStyle={styles.container} showsVerticalScrollIndicator={false}>
-        <View style={styles.header}>
-          <AppText variant="h1" style={styles.title}>
-            Timeline
-          </AppText>
-          <View style={styles.divider} />
-        </View>
+        {!omitInScreenHeader ? (
+          <View style={styles.header}>
+            <AppText variant="h1" style={styles.title}>
+              Timeline
+            </AppText>
+            <View style={styles.divider} />
+          </View>
+        ) : null}
 
-        {sorted.map((event) => (
+        {sorted.map((event) => {
+          const speakersText = speakersToDisplayText(event.speakers);
+          return (
           <View key={event.id} style={styles.card}>
             <View style={styles.row}>
               <AppText variant="caption" style={styles.time}>
@@ -80,9 +111,9 @@ export function BaseTimelineScreen({ schedule, favoriteEventIds, toggleFavorite 
                 {event.location}
               </AppText>
             ) : null}
-            {event.speakers ? (
+            {speakersText ? (
               <AppText variant="caption" style={styles.speakers}>
-                {event.speakers}
+                {speakersText}
               </AppText>
             ) : null}
             {event.description ? (
@@ -91,7 +122,8 @@ export function BaseTimelineScreen({ schedule, favoriteEventIds, toggleFavorite 
               </AppText>
             ) : null}
           </View>
-        ))}
+          );
+        })}
       </ScrollView>
     </SafeAreaView>
   );

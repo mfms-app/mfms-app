@@ -1,14 +1,20 @@
-import React,  { useState } from 'react';
-import { StyleSheet, View, TouchableOpacity, ScrollView, Linking } from 'react-native';
-import { colors, fonts } from '../../styles';
+import React, { useState } from 'react';
+import { StyleSheet, View, TouchableOpacity, ScrollView } from 'react-native';
+import { colors } from '../../styles';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import AppText from '../../components/Text';
 import { useNavigation } from '@react-navigation/native';
+import { cancelEventReminder, ensureNotificationsReady, scheduleEventReminder } from '../../services/notifications';
 
-import {speakers as speakerData} from '../speakers/SpeakerData';
-import border from 'victory-native/lib/components/victory-primitives/border';
+import { speakers as speakerData } from '../speakers/SpeakerData';
 
-export default function ScheduleScreen({ schedule, selectedSessions, loadSchedule }) {
+export default function ScheduleScreen({
+  schedule,
+  selectedSessions,
+  loadSchedule,
+  favoriteEventIds,
+  toggleFavorite,
+}) {
   const [expandedSession, setExpandedSession] = useState(null);
 
   React.useEffect(() => {
@@ -18,6 +24,26 @@ export default function ScheduleScreen({ schedule, selectedSessions, loadSchedul
     setExpandedSession(expandedSession === sessionId ? null : sessionId);
   };
   const navigation = useNavigation();
+
+  const onFavoritePress = async (session) => {
+    const wasFavorite = favoriteEventIds.includes(session.id);
+    toggleFavorite(session.id);
+    try {
+      await ensureNotificationsReady();
+      if (wasFavorite) {
+        await cancelEventReminder(session.id);
+      } else {
+        await scheduleEventReminder({
+          eventId: session.id,
+          title: session.title,
+          startDateTimeISO: session.startDateTimeISO,
+        });
+      }
+    } catch (e) {
+      // Favorites still update if notifications fail (same as profile timeline).
+    }
+  };
+
   const renderFormattedSpeakers = (speakersArray) => {
 
   const fullSpeakerObject = (speakerName) => {
@@ -58,46 +84,64 @@ export default function ScheduleScreen({ schedule, selectedSessions, loadSchedul
   );
 };
 
-  const renderSession = (session) => (
-    <View
-      key={session.id}
-      style={[styles.sessionCard, selectedSessions.includes(session.id) && styles.selectedCard]}
-    >
-      {/* Make the entire card act as a button only if there are speakers */}
-      <TouchableOpacity 
-        activeOpacity={session.speakers && session.speakers !== '' ? 0.7 : 1}
-        onPress={() => {
-          if (session.speakers && session.speakers !== '') {
-            toggleDropdown(session.id);
-          }
-        }}
+  const renderSession = (session) => {
+    const hasSpeakers = session.speakers && session.speakers !== '';
+    const isFavorite = favoriteEventIds.includes(session.id);
+
+    return (
+      <View
+        key={session.id}
+        style={[styles.sessionCard, selectedSessions.includes(session.id) && styles.selectedCard]}
       >
         <View style={styles.sessionHeader}>
-          <View style={styles.sessionTextContainer}>
-            <AppText variant='bodyBlue'>{session.startTime} - {session.endTime}</AppText>
-            <AppText variant='h2'>{session.title}</AppText>
-            <AppText variant='body'>{session.location}</AppText>
-          </View>
-          
-          {/* Only show dropdown icon if speakers exist */}
-          {session.speakers && session.speakers !== '' && (
-            <View style={styles.iconContainer}>
-              <Icon 
-                name={expandedSession === session.id ? 'chevron-up' : 'chevron-down'} 
-                size={20} 
-                color={colors.black}
-              />
+          <TouchableOpacity
+            style={styles.sessionMainTouchable}
+            activeOpacity={hasSpeakers ? 0.7 : 1}
+            onPress={() => {
+              if (hasSpeakers) toggleDropdown(session.id);
+            }}
+          >
+            <View style={styles.sessionTextContainer}>
+              <AppText variant="bodyBlue">
+                {session.startTime} - {session.endTime}
+              </AppText>
+              <AppText variant="h2">{session.title}</AppText>
+              <AppText variant="body">{session.location}</AppText>
             </View>
-          )}
+          </TouchableOpacity>
+
+          <View style={styles.sessionHeaderActions}>
+            <TouchableOpacity
+              onPress={() => onFavoritePress(session)}
+              style={[styles.favoriteHeartButton, isFavorite && styles.favoriteHeartButtonActive]}
+              accessibilityLabel={isFavorite ? 'Remove from favorites' : 'Add to favorites'}
+            >
+              <Icon
+                name={isFavorite ? 'heart' : 'heart-o'}
+                size={20}
+                color={isFavorite ? colors.white : colors.blue}
+              />
+            </TouchableOpacity>
+            {hasSpeakers ? (
+              <TouchableOpacity
+                onPress={() => toggleDropdown(session.id)}
+                style={styles.chevronButton}
+                accessibilityLabel={expandedSession === session.id ? 'Collapse session' : 'Expand session'}
+              >
+                <Icon
+                  name={expandedSession === session.id ? 'chevron-up' : 'chevron-down'}
+                  size={20}
+                  color={colors.black}
+                />
+              </TouchableOpacity>
+            ) : null}
+          </View>
         </View>
-        
-        {/* Speakers section with italics for titles */}
-        {expandedSession === session.id && session.speakers && (
-          renderFormattedSpeakers(session.speakers)
-        )}
-      </TouchableOpacity>
-    </View>
-  );
+
+        {expandedSession === session.id && hasSpeakers ? renderFormattedSpeakers(session.speakers) : null}
+      </View>
+    );
+  };
 
   return (
     <View style={styles.container}>  
@@ -257,11 +301,31 @@ const styles = StyleSheet.create({
     alignItems: 'flex-start', // Align items to the top
   },
   sessionTextContainer: {
-    flex: 1, // Take up available space
-    paddingRight: 16, // Add some space between text and icon
+    flex: 1,
   },
-  iconContainer: {
-    paddingTop: 2, // Align icon vertically with the time text
-    paddingLeft: 8,
+  sessionMainTouchable: {
+    flex: 1,
+    paddingRight: 8,
+  },
+  sessionHeaderActions: {
+    alignItems: 'center',
+    justifyContent: 'flex-start',
+    paddingTop: 2,
+  },
+  favoriteHeartButton: {
+    borderWidth: 1,
+    borderColor: colors.blue,
+    borderRadius: 10,
+    paddingHorizontal: 10,
+    paddingVertical: 8,
+    backgroundColor: colors.white,
+    marginBottom: 6,
+  },
+  favoriteHeartButtonActive: {
+    backgroundColor: colors.blue,
+  },
+  chevronButton: {
+    paddingHorizontal: 4,
+    paddingVertical: 2,
   },
 }); 
