@@ -1,3 +1,5 @@
+import { type } from "@react-native-firebase/app/dist/module/internal/web/firebaseFirestorePipelines";
+
 // Action Types
 const LOAD_SCHEDULE = 'Schedule/LOAD_SCHEDULE';
 const TOGGLE_SESSION = 'Schedule/TOGGLE_SESSION';
@@ -16,7 +18,6 @@ const schedule = [
     speakers: '',
     title: 'Check-In Begins',
     location: '',
-    description: 'Arrive, pick up your badge, and get settled before the summit begins.',
   },
   {
     id: 1,
@@ -38,8 +39,10 @@ const schedule = [
       { name: 'Steve Shiffman', title: 'Strategic Advisor, Coach, & Former CEO of Calvin Klein'},
       { name: 'Ken Pilot', title: 'Founder of Ken Pilot Ventures'}
     ],
-    title: 'Keynote: Steve Shiffman',
+    title: 'Culture, Commerce & Calvin Klein: From the Mind of a CEO',
     location: 'Robertson Auditorium',
+    type: 'panel',
+    description: 'Hear Steve talk about his experience as the former CEO of Calvin Klein and what he is doing now.'
   },
   {
     id: 3,
@@ -49,8 +52,10 @@ const schedule = [
       { name: 'Kenneth Himmel', title: 'President of Related Ross', link:'' },
       { name: 'Webber Hudson', title: 'Executive Vice President, Retail Leasing and Asset Management Related Ross' }
     ],
-    title: 'Fireside: Building The Foundation: The Business of Luxury Real Estate & Fashion',
+    title: 'Retail Renaissance: The Evolution of Luxury Experiences',
     location: 'Robertson Auditorium',
+    type: 'panel',
+    description: 'From the demolition of massive department store giants to the rise of the "lifestyle center," the physical retail landscape is undergoing a radical transformation. This panel tracks the 25-year evolution of the industry, exploring why traditional department stores have declined while high-performing "A-malls" thrive through reinvention. Panelists will discuss a shift where restaurants serve as the new anchors and developers merge retail, dining, and leisure into cohesive ecosystems, defining what makes a modern destination successful in the future of commerce.'
   },
   {
     id: 4,
@@ -73,6 +78,8 @@ const schedule = [
     ],
     title: 'Brand Storytelling: Content To Connection',
     location: 'Robertson Auditorium',
+    type: 'panel',
+    description: 'This panel will explore how brands can use social media to build a cohesive, 360-degree brand vision that connects across every consumer touchpoint. Panelists will discuss how platforms can serve as powerful tools for storytelling, authenticity, and community-building, moving beyond simple promotion to create meaningful relationships with audiences. The conversation will also highlight strategies for aligning brand voice, visuals, and values across channels to drive trust, engagement, and lasting consumer buy-in.'
   },
   {
     id: 6,
@@ -84,6 +91,8 @@ const schedule = [
     ],
     title: 'Beyond the Basics: The Art of Styling Menswear',
     location: 'Robertson Auditorium',
+    type: 'panel',
+    description: 'Menswear operates across vastly different scales, from founder-led startups to globally recognized brands. This panel will explore how fashion serves as a powerful tool for men’s self-expression, confidence, and identity. Panelists will discuss maintaining authenticity, navigating scale, and the role of media in shaping streetwear’s future.'
   },
   {
     id: 7,
@@ -107,6 +116,8 @@ const schedule = [
     ],
     title: 'Agentic Commerce: Enhancing Consumer Experience with AI',
     location: 'Robertson Auditorium',
+    type: 'panel',
+    description: 'Agentic commerce represents a shift from reactive shopping to proactive, AI-driven experiences where technology anticipates consumer needs, personalizes discovery, and streamlines decision-making. This panel will explore how AI agents, data, and automation are reshaping commerce across the luxury and retail sectors. Panelists will discuss real-world applications, brand implications, and what this evolution means for both consumers and businesses.'
   },
   {
     id: 9,
@@ -126,6 +137,8 @@ const schedule = [
     ],
     title: 'Fireside: Equity Through Entrepreneurship: Disrupting The Industry',
     location: 'Robertson Auditorium',
+    type: 'panel',
+    description: 'This panel will spotlight how meaningful change happens when intention meets action. The conversation will explore equity as a business imperative, the role of mentorship and access, and how “good deeds” can drive lasting cultural and industry transformation.'
   },
   {
     id: 11,
@@ -139,6 +152,8 @@ const schedule = [
     ],
     title: 'Vision to Venture: Young Founders in Fashion',
     location: 'Robertson Auditorium',
+    type: 'panel',
+    description: 'From viral launches to long-term brand equity, this panel, sponsored by Shopify, brings together young entrepreneurs who have transformed personal vision into category-defining fashion brands. Panelists will share the realities of building, scaling, and sustaining cult followings early in their careers, including taking early risks, maintaining creative control, and navigating rapid growth in a highly competitive industry.'
   },
   {
     id: 12,

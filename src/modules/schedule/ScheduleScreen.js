@@ -137,11 +137,23 @@ export default function ScheduleScreen({
             ) : null}
           </View>
         </View>
-
-        {expandedSession === session.id && hasSpeakers ? renderFormattedSpeakers(session.speakers) : null}
-      </View>
-    );
-  };
+        
+        {/* Speakers section with italics for titles */}
+        {expandedSession === session.id && session.speakers && (
+          <View>
+            {renderFormattedSpeakers(session.speakers)}
+            {session.description ? (
+              <View style={styles.sessionDescriptionContainer}>
+                <AppText variant='body' style={styles.sessionDescription}>
+                  {session.description}
+                </AppText>
+              </View>
+            ) : null}
+          </View>
+        )}
+      </TouchableOpacity>
+    </View>
+  );
 
   return (
     <View style={styles.container}>  
@@ -258,6 +270,18 @@ const styles = StyleSheet.create({
     color: colors.gray,
     marginTop: 2,
     textAlign: 'left', // Change to left alignment
+  },
+  sessionDescriptionContainer: {
+    marginTop: 12,
+    paddingTop: 12,
+    borderTopWidth: 1,
+    borderTopColor: colors.gray + '30',
+  },
+  sessionDescription: {
+    fontFamily: "NeueHaasDisplayRoman",
+    fontSize: 15,
+    color: colors.darkGray,
+    lineHeight: 22,
   },
   location: {
     marginTop: 7,

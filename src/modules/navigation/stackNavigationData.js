@@ -102,7 +102,7 @@ const StackNavigationData = [
     headerLeft: headerLeftComponent,
     headerBackground: { source: headerBackground },
   },
-
 ]
 
+export { headerLeftComponent };
 export default StackNavigationData;

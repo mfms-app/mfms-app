@@ -23,7 +23,7 @@ const SpeakersScreen = () => {
 
       {/* Speaker Grid */}
       <FlatList
-        data={speakers}
+        data={speakers.filter((speaker) => !speaker.mfms)} // Filter to only include MFMS team members
         keyExtractor={(item) => item.id}
         numColumns={2} 
         contentContainerStyle={styles.flatListContent}
