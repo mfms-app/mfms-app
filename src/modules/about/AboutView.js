@@ -15,6 +15,8 @@ import { colors} from '../../styles';
 import TeamDropdown from './TeamDropdown.js';
 import teamData from '../../data/studentplanningteam.js';
 import AppText from '../../components/Text.js';
+import { useNavigation } from '@react-navigation/native';
+import RNSButton from '../../components/Button.js';
 
 const AboutScreen = () => {
   // Animation values
@@ -22,6 +24,7 @@ const AboutScreen = () => {
   const slideAnim = useRef(new Animated.Value(-50)).current;
   const contentFade = useRef(new Animated.Value(0)).current;
   const videoRef = useRef(null);
+  const navigation = useNavigation();
 
   useEffect(() => {
     // Sequence of animations
@@ -77,7 +80,20 @@ const AboutScreen = () => {
               onReadyForDisplay={() => console.log('Video ready for display')}
             />
           </View>
-
+          <View style={styles.buttonRow}>
+          <RNSButton
+            caption="Contact Us"
+            bordered
+            primary
+            onPress={() => navigation.navigate('Contact')}
+          />
+          <RNSButton
+            caption="MFMS 2026"
+            bordered
+            primary
+            onPress={() => navigation.navigate('Summit')}
+          />
+          </View>
           {/* About Us Content */}
           <AppText style={styles.heading} variant='h2'>
             Our Story
@@ -179,6 +195,11 @@ const styles = StyleSheet.create({
     color: colors.white,
     textAlign: 'center',
     textTransform: 'lowercase',
+  },
+  buttonRow:{
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginVertical: 20,
   },
   outlinedTextShadow: {
     position: 'absolute',

@@ -1,16 +1,24 @@
 import React from 'react';
-import { Alert, SafeAreaView, ScrollView, StyleSheet, TouchableOpacity, View } from 'react-native';
+import {
+  Alert,
+  Linking,
+  SafeAreaView,
+  ScrollView,
+  StyleSheet,
+  TouchableOpacity,
+  View,
+} from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 import AppText from '../../components/Text';
 import { colors } from '../../styles';
 import { firebaseAuth } from '../../services/firebase';
-import EditProfileScreen from './EditProfileScreen';
-import TimelineScreen from '../events/TimelineScreen';
-import FavoritesTimelineScreen from '../events/FavoritesTimelineScreen';
 import notifee from '@notifee/react-native';
 import { connect } from 'react-redux';
 
+const RESUME_DROP_FORM_URL = 'https://docs.google.com/forms/d/e/1FAIpQLScRTC0E6jIQSaYA5ctiN2ivL3JrTD2m8rT5zcWJTBPz8s2rPQ/viewform';
+
 function ProfileHomeScreen({ user, schedule, favoriteEventIds }) {
-  const [screen, setScreen] = React.useState('home'); // home | editProfile | timeline
+  const navigation = useNavigation();
   const [notifStatus, setNotifStatus] = React.useState(null);
 
   React.useEffect(() => {
@@ -29,24 +37,6 @@ function ProfileHomeScreen({ user, schedule, favoriteEventIds }) {
     };
   }, []);
 
-  const signOut = async () => {
-    try {
-      await firebaseAuth.signOut();
-    } catch (e) {
-      Alert.alert('Sign out failed', e?.message || 'Something went wrong.');
-    }
-  };
-
-  if (screen === 'editProfile') {
-    return <EditProfileScreen user={user} onDone={() => setScreen('home')} />;
-  }
-  if (screen === 'timeline') {
-    return <TimelineScreen />;
-  }
-  if (screen === 'favorites') {
-    return <FavoritesTimelineScreen />;
-  }
-
   const upcomingFavorites = React.useMemo(() => {
     const now = Date.now();
     const next24h = now + 24 * 60 * 60 * 1000;
@@ -58,6 +48,20 @@ function ProfileHomeScreen({ user, schedule, favoriteEventIds }) {
       .sort((a, b) => a.startMs - b.startMs)
       .slice(0, 3);
   }, [schedule, favoriteEventIds]);
+
+  const signOut = async () => {
+    try {
+      await firebaseAuth.signOut();
+    } catch (e) {
+      Alert.alert('Sign out failed', e?.message || 'Something went wrong.');
+    }
+  };
+
+  const openResumeDrop = () => {
+    Linking.openURL(RESUME_DROP_FORM_URL).catch(() => {
+      Alert.alert('Unable to open', 'Could not open the form. Please try again.');
+    });
+  };
 
   return (
     <SafeAreaView style={styles.safeArea}>
@@ -100,21 +104,36 @@ function ProfileHomeScreen({ user, schedule, favoriteEventIds }) {
         ) : null}
 
         <View style={styles.card}>
-          <TouchableOpacity onPress={() => setScreen('timeline')} style={styles.secondaryButton}>
+          <TouchableOpacity
+            onPress={() => navigation.navigate('ProfileTimeline')}
+            style={styles.secondaryButton}
+          >
             <AppText variant="h3" style={styles.secondaryButtonText}>
               My timeline
             </AppText>
           </TouchableOpacity>
 
-          <TouchableOpacity onPress={() => setScreen('favorites')} style={styles.secondaryButton}>
+          <TouchableOpacity
+            onPress={() => navigation.navigate('ProfileFavorites')}
+            style={styles.secondaryButton}
+          >
             <AppText variant="h3" style={styles.secondaryButtonText}>
               Favorites
             </AppText>
           </TouchableOpacity>
 
-          <TouchableOpacity onPress={() => setScreen('editProfile')} style={styles.secondaryButton}>
+          <TouchableOpacity
+            onPress={() => navigation.navigate('ProfileEdit')}
+            style={styles.secondaryButton}
+          >
             <AppText variant="h3" style={styles.secondaryButtonText}>
               Edit profile
+            </AppText>
+          </TouchableOpacity>
+
+          <TouchableOpacity onPress={openResumeDrop} style={styles.secondaryButton}>
+            <AppText variant="h3" style={styles.secondaryButtonText}>
+              Resume Drop
             </AppText>
           </TouchableOpacity>
 

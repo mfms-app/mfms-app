@@ -3,10 +3,26 @@ import { ActivityIndicator, SafeAreaView, StyleSheet, View } from 'react-native'
 import { colors } from '../../styles';
 import useAuthState from './useAuthState';
 import AuthScreen from './AuthScreen';
-import ProfileHomeScreen from './ProfileHomeScreen';
+import ProfileStackNavigator from './ProfileStackNavigator';
 
-export default function ProfileRootScreen() {
+export default function ProfileRootScreen({ navigation }) {
   const { user, initializing } = useAuthState();
+  const prevUserRef = React.useRef(undefined);
+
+  React.useEffect(() => {
+    if (initializing) return;
+    const prev = prevUserRef.current;
+    if (prev === undefined) {
+      prevUserRef.current = user;
+      return;
+    }
+    if (!prev && user) {
+      navigation.navigate('Home');
+    } else if (prev && !user) {
+      navigation.navigate('Profile');
+    }
+    prevUserRef.current = user;
+  }, [user, initializing, navigation]);
 
   if (initializing) {
     return (
@@ -18,7 +34,7 @@ export default function ProfileRootScreen() {
     );
   }
 
-  return user ? <ProfileHomeScreen user={user} /> : <AuthScreen />;
+  return user ? <ProfileStackNavigator user={user} /> : <AuthScreen />;
 }
 
 const styles = StyleSheet.create({
