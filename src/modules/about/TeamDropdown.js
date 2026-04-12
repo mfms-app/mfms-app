@@ -8,6 +8,7 @@ import {
   FlatList,
   Linking,
 } from "react-native";
+import Icon from 'react-native-vector-icons/FontAwesome';
 import { colors } from "../../styles";
 import AppText from "../../components/Text";
 export default function TeamDropdown({ title, team }) {
@@ -43,9 +44,12 @@ export default function TeamDropdown({ title, team }) {
           {title}
         </AppText>
 
-        <Text style={[styles.arrow, open && styles.arrowOpen]}>
-          ▼
-        </Text>
+        <Icon 
+          name={open ? 'chevron-up' : 'chevron-down'} 
+          size={20} 
+          color={colors.black}
+          style={styles.arrow}
+        />
       </Pressable>
 
       {/* Content */}
@@ -68,25 +72,32 @@ export default function TeamDropdown({ title, team }) {
 const styles = StyleSheet.create({
   container: {
     width: "100%",
-    borderColor: colors.blue,
-    borderWidth: 2,
+    backgroundColor: colors.white,
     borderRadius: 8,
+    shadowColor: colors.darkGray,
+    shadowOffset: { width: 0, height: 0 },
+    shadowOpacity: 0.3,
+    shadowRadius: 4,
+    elevation: 6,
+    borderWidth: 0.1,
+    borderColor: colors.darkGray + '20',
   },
 
   header: {
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    paddingVertical: 20,
-    paddingHorizontal: 24,
+    paddingVertical: 16,
+    paddingHorizontal: 16,
   },
 
   headerText: {
-    letterSpacing: 1,
+    color: colors.black,
+    flex: 1,
   },
 
   arrow: {
-    fontSize: 20,
+    paddingLeft: 8,
   },
 
   arrowOpen: {
@@ -95,7 +106,9 @@ const styles = StyleSheet.create({
 
   content: {
     backgroundColor: colors.white,
-    padding: 20,
+    padding: 16,
+    borderTopWidth: 1,
+    borderTopColor: colors.gray + '30',
   },
 
   member: {
@@ -109,19 +122,17 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     overflow: "hidden",
     marginBottom: 10,
-    borderColor: colors.blue,
-    borderWidth: 2,
-    },
+  },
   photo: {
     width: "100%",
-    height: "140%",      // make image taller than container
-    alignSelf: "flex-start", // anchor image to the top
-},
+    height: "140%",
+    alignSelf: "flex-start",
+  },
   name: {
     fontWeight: "bold",
     color: colors.black,
     textAlign: "center",
-    },
+  },
 
   title: {
     color: colors.black,
