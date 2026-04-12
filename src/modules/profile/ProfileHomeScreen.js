@@ -1,6 +1,7 @@
 import React from 'react';
 import {
   Alert,
+  Image,
   Linking,
   SafeAreaView,
   ScrollView,
@@ -11,15 +12,21 @@ import {
 import { useNavigation } from '@react-navigation/native';
 import AppText from '../../components/Text';
 import { colors } from '../../styles';
+import { isTeamResourceEmail } from '../../constants/teamResourceEmails';
 import { firebaseAuth } from '../../services/firebase';
 import notifee from '@notifee/react-native';
 import { connect } from 'react-redux';
+import defaultProfileAvatar from './defaultProfileAvatar';
+import { formatProfileDisplayName, loadStoredProfile, mergeStoredProfile } from './profileStorage';
+import { pickProfilePhoto } from './pickProfilePhoto';
 
 const RESUME_DROP_FORM_URL = 'https://docs.google.com/forms/d/e/1FAIpQLScRTC0E6jIQSaYA5ctiN2ivL3JrTD2m8rT5zcWJTBPz8s2rPQ/viewform';
 
 function ProfileHomeScreen({ user, schedule, favoriteEventIds }) {
   const navigation = useNavigation();
   const [notifStatus, setNotifStatus] = React.useState(null);
+  const [storedProfile, setStoredProfile] = React.useState(null);
+  const [avatarBusy, setAvatarBusy] = React.useState(false);
 
   React.useEffect(() => {
     let mounted = true;
@@ -36,6 +43,17 @@ function ProfileHomeScreen({ user, schedule, favoriteEventIds }) {
       mounted = false;
     };
   }, []);
+
+  const refreshStoredProfile = React.useCallback(async () => {
+    if (!user?.uid) return;
+    const p = await loadStoredProfile(user.uid);
+    setStoredProfile(p);
+  }, [user?.uid]);
+
+  React.useEffect(() => {
+    const unsub = navigation.addListener('focus', refreshStoredProfile);
+    return unsub;
+  }, [navigation, refreshStoredProfile]);
 
   const upcomingFavorites = React.useMemo(() => {
     const now = Date.now();
@@ -63,6 +81,37 @@ function ProfileHomeScreen({ user, schedule, favoriteEventIds }) {
     });
   };
 
+  const openTeamResources = () => {
+    let nav = navigation;
+    while (nav) {
+      const names = nav.getState?.()?.routeNames;
+      if (Array.isArray(names) && names.includes('TeamResources')) {
+        nav.navigate('TeamResources');
+        return;
+      }
+      nav = nav.getParent?.();
+    }
+    navigation.navigate('TeamResources');
+  };
+
+  const showTeamResources = isTeamResourceEmail(user?.email);
+  const displayName = formatProfileDisplayName(storedProfile, user);
+  const photoUri = storedProfile?.photoBase64;
+
+  const onChangeProfilePhoto = async () => {
+    if (!user?.uid || avatarBusy) return;
+    setAvatarBusy(true);
+    try {
+      const uri = await pickProfilePhoto();
+      if (uri) {
+        await mergeStoredProfile(user.uid, { photoBase64: uri });
+        await refreshStoredProfile();
+      }
+    } finally {
+      setAvatarBusy(false);
+    }
+  };
+
   return (
     <SafeAreaView style={styles.safeArea}>
       <ScrollView contentContainerStyle={styles.container} showsVerticalScrollIndicator={false}>
@@ -77,7 +126,26 @@ function ProfileHomeScreen({ user, schedule, favoriteEventIds }) {
           <AppText variant="body" style={styles.line}>
             Signed in as
           </AppText>
-          <AppText variant="h3" style={styles.email}>
+          <TouchableOpacity
+            style={styles.avatarTouchable}
+            onPress={onChangeProfilePhoto}
+            disabled={avatarBusy}
+            activeOpacity={0.85}
+            accessibilityRole="button"
+            accessibilityLabel="Change profile photo"
+          >
+            <Image
+              source={photoUri ? { uri: photoUri } : defaultProfileAvatar}
+              style={styles.avatar}
+            />
+          </TouchableOpacity>
+          <AppText variant="caption" style={styles.avatarHint}>
+            Tap photo to change
+          </AppText>
+          <AppText variant="h3" style={styles.displayName}>
+            {displayName || '—'}
+          </AppText>
+          <AppText variant="body" style={styles.email}>
             {user?.email || '—'}
           </AppText>
           <AppText variant="caption" style={styles.caption}>
@@ -109,7 +177,7 @@ function ProfileHomeScreen({ user, schedule, favoriteEventIds }) {
             style={styles.secondaryButton}
           >
             <AppText variant="h3" style={styles.secondaryButtonText}>
-              My timeline
+              My Schedule
             </AppText>
           </TouchableOpacity>
 
@@ -136,6 +204,14 @@ function ProfileHomeScreen({ user, schedule, favoriteEventIds }) {
               Resume Drop
             </AppText>
           </TouchableOpacity>
+
+          {showTeamResources ? (
+            <TouchableOpacity onPress={openTeamResources} style={styles.secondaryButton}>
+              <AppText variant="h3" style={styles.secondaryButtonText}>
+                Team Resources
+              </AppText>
+            </TouchableOpacity>
+          ) : null}
 
           <TouchableOpacity onPress={signOut} style={styles.primaryButton}>
             <AppText variant="h3" style={styles.primaryButtonText}>
@@ -185,9 +261,33 @@ const styles = StyleSheet.create({
   line: {
     color: colors.black,
   },
+  avatarTouchable: {
+    alignSelf: 'center',
+    marginTop: 12,
+    marginBottom: 4,
+  },
+  avatar: {
+    width: 96,
+    height: 96,
+    borderRadius: 48,
+    borderWidth: 2,
+    borderColor: colors.blue,
+    backgroundColor: colors.white,
+  },
+  avatarHint: {
+    color: colors.gray,
+    textAlign: 'center',
+    marginBottom: 8,
+  },
+  displayName: {
+    color: colors.black,
+    textAlign: 'center',
+    marginBottom: 4,
+  },
   email: {
     color: colors.blue,
-    marginTop: 6,
+    textAlign: 'center',
+    marginTop: 2,
   },
   caption: {
     color: colors.gray,

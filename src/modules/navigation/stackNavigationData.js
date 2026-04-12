@@ -10,6 +10,8 @@ import FAQPage from '../faq/FAQInfoView';
 import PartnersScreen from '../partners/PartnersInfoView';
 import SpeakerDetails from '../speakers/SpeakerDetails';
 import ContactViewScreen from '../contact/ContactView';
+import TeamResourcesScreen from '../team/TeamResourcesScreen';
+import TeamSummitResourcesScreen from '../team/TeamSummitResourcesScreen';
 
 import { colors, fonts } from '../../styles';
 
@@ -102,6 +104,21 @@ const StackNavigationData = [
     headerLeft: headerLeftComponent,
     headerBackground: { source: headerBackground },
   },
+  {
+    name: 'TeamResources',
+    component: TeamResourcesScreen,
+    headerLeft: headerLeftComponent,
+    headerBackground: { source: headerBackground },
+    headerTitle: 'Team Resources',
+  },
+  {
+    name: 'TeamSummitResources',
+    component: TeamSummitResourcesScreen,
+    headerLeft: headerLeftComponent,
+    headerBackground: { source: headerBackground },
+    headerTitle: 'Summit',
+  },
+
 ]
 
 export { headerLeftComponent };

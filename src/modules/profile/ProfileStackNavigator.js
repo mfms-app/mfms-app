@@ -33,7 +33,7 @@ export default function ProfileStackNavigator({ user }) {
       <Stack.Screen
         name="ProfileTimeline"
         component={ProfileTimelineRoute}
-        options={{ title: 'My timeline' }}
+        options={{ title: 'My Schedule' }}
       />
       <Stack.Screen
         name="ProfileFavorites"

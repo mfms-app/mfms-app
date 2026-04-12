@@ -934,6 +934,10 @@ PODS:
   - React-Mapbuffer (0.73.1):
     - glog
     - React-debug
+  - react-native-image-picker (7.2.3):
+    - glog
+    - RCT-Folly (= 2022.05.16.00)
+    - React-Core
   - react-native-safe-area-context (0.7.3):
     - React
   - react-native-video (6.19.1):
@@ -1188,6 +1192,7 @@ DEPENDENCIES:
   - React-jsinspector (from `../node_modules/react-native/ReactCommon/jsinspector-modern`)
   - React-logger (from `../node_modules/react-native/ReactCommon/logger`)
   - React-Mapbuffer (from `../node_modules/react-native/ReactCommon`)
+  - react-native-image-picker (from `../node_modules/react-native-image-picker`)
   - react-native-safe-area-context (from `../node_modules/react-native-safe-area-context`)
   - react-native-video (from `../node_modules/react-native-video`)
   - react-native-webview (from `../node_modules/react-native-webview`)
@@ -1299,6 +1304,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/ReactCommon/logger"
   React-Mapbuffer:
     :path: "../node_modules/react-native/ReactCommon"
+  react-native-image-picker:
+    :path: "../node_modules/react-native-image-picker"
   react-native-safe-area-context:
     :path: "../node_modules/react-native-safe-area-context"
   react-native-video:
@@ -1412,6 +1419,7 @@ SPEC CHECKSUMS:
   React-jsinspector: 369048694e39942063c5d08e9580b43e2edd379a
   React-logger: c6cc01d7cff5f77924db08c7fbaf5a4d7a9ab857
   React-Mapbuffer: 5255b6d24f741e44e7a7ddbf1f494b7c25890eed
+  react-native-image-picker: 57a1f383821909eadd9532c7297a863e86185933
   react-native-safe-area-context: 1b229872ad5eefde82f117a6a2c97a7f71717537
   react-native-video: cfee8186dc8880141847aa7346eb933328f065e9
   react-native-webview: f393fb37becc17a159638c7dedb50f8d5bfa7358
