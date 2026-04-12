@@ -14,17 +14,17 @@ const homeContent = [
   {
     id: 2,
     image: require('../../../assets/images/recent/stitch_one.png'),
-    link: 'home'
+    link: 'https://www.michiganfashionmediasummit.com/stitch-all/2026/3/10/style-vs-clothes'
   },
   {
     id: 3,
     image: require('../../../assets/images/recent/stitch_two.png'),
-    link: 'home'
+    link: 'https://www.michiganfashionmediasummit.com/stitch-all/2025/11/23/brendan-1'
   },
   {
     id: 4,
     image: require('../../../assets/images/recent/the_loop.png'),
-    link: 'home'
+    link: 'https://www.michiganfashionmediasummit.com/the-loop-post/2025/1/28/template-js53f'
   },
 ]
 export default function HomeScreen() {

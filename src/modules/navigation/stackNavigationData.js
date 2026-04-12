@@ -121,4 +121,5 @@ const StackNavigationData = [
 
 ]
 
+export { headerLeftComponent };
 export default StackNavigationData;
