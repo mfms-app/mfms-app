@@ -11,6 +11,7 @@ import {
 } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import AppText from '../../components/Text';
+import RNSButton from '../../components/Button';
 import { colors } from '../../styles';
 import { isTeamResourceEmail } from '../../constants/teamResourceEmails';
 import { firebaseAuth } from '../../services/firebase';
@@ -24,7 +25,7 @@ const RESUME_DROP_FORM_URL = 'https://docs.google.com/forms/d/e/1FAIpQLScRTC0E6j
 
 function ProfileHomeScreen({ user, schedule, favoriteEventIds }) {
   const navigation = useNavigation();
-  const [notifStatus, setNotifStatus] = React.useState(null);
+  const [setNotifStatus] = React.useState(null);
   const [storedProfile, setStoredProfile] = React.useState(null);
   const [avatarBusy, setAvatarBusy] = React.useState(false);
 
@@ -123,9 +124,6 @@ function ProfileHomeScreen({ user, schedule, favoriteEventIds }) {
         </View>
 
         <View style={styles.card}>
-          <AppText variant="body" style={styles.line}>
-            Signed in as
-          </AppText>
           <TouchableOpacity
             style={styles.avatarTouchable}
             onPress={onChangeProfilePhoto}
@@ -139,17 +137,11 @@ function ProfileHomeScreen({ user, schedule, favoriteEventIds }) {
               style={styles.avatar}
             />
           </TouchableOpacity>
-          <AppText variant="caption" style={styles.avatarHint}>
-            Tap photo to change
-          </AppText>
           <AppText variant="h3" style={styles.displayName}>
             {displayName || '—'}
           </AppText>
           <AppText variant="body" style={styles.email}>
             {user?.email || '—'}
-          </AppText>
-          <AppText variant="caption" style={styles.caption}>
-            Notifications: {notifStatus === 1 ? 'enabled' : notifStatus === 0 ? 'disabled' : 'unknown'}
           </AppText>
         </View>
 
@@ -172,52 +164,60 @@ function ProfileHomeScreen({ user, schedule, favoriteEventIds }) {
         ) : null}
 
         <View style={styles.card}>
-          <TouchableOpacity
+          <RNSButton
+            caption="My Schedule"
+            large
+            bordered
+            primary
             onPress={() => navigation.navigate('ProfileTimeline')}
-            style={styles.secondaryButton}
-          >
-            <AppText variant="h3" style={styles.secondaryButtonText}>
-              My Schedule
-            </AppText>
-          </TouchableOpacity>
+            style={styles.buttonFullWidth}
+          />
 
-          <TouchableOpacity
+          <RNSButton
+            caption="Favorites"
+            bordered
+            large
+            primary
             onPress={() => navigation.navigate('ProfileFavorites')}
-            style={styles.secondaryButton}
-          >
-            <AppText variant="h3" style={styles.secondaryButtonText}>
-              Favorites
-            </AppText>
-          </TouchableOpacity>
+            style={styles.buttonFullWidth}
+          />
 
-          <TouchableOpacity
+          <RNSButton
+            caption="Edit profile"
+            bordered
+            large
+            primary
             onPress={() => navigation.navigate('ProfileEdit')}
-            style={styles.secondaryButton}
-          >
-            <AppText variant="h3" style={styles.secondaryButtonText}>
-              Edit profile
-            </AppText>
-          </TouchableOpacity>
+            style={styles.buttonFullWidth}
+          />
 
-          <TouchableOpacity onPress={openResumeDrop} style={styles.secondaryButton}>
-            <AppText variant="h3" style={styles.secondaryButtonText}>
-              Resume Drop
-            </AppText>
-          </TouchableOpacity>
+          <RNSButton
+            caption="Resume Drop"
+            bordered
+            large
+            primary
+            onPress={openResumeDrop}
+            style={styles.buttonFullWidth}
+          />
 
           {showTeamResources ? (
-            <TouchableOpacity onPress={openTeamResources} style={styles.secondaryButton}>
-              <AppText variant="h3" style={styles.secondaryButtonText}>
-                Team Resources
-              </AppText>
-            </TouchableOpacity>
+            <RNSButton
+              caption="Team Resources"
+              bordered
+              large
+              primary
+              onPress={openTeamResources}
+              style={styles.buttonFullWidth}
+            />
           ) : null}
 
-          <TouchableOpacity onPress={signOut} style={styles.primaryButton}>
-            <AppText variant="h3" style={styles.primaryButtonText}>
-              Sign out
-            </AppText>
-          </TouchableOpacity>
+          <RNSButton
+            large
+            bgColor = {colors.blue}
+            caption="Sign out"
+            onPress={signOut}
+            style={styles.buttonFullWidth}
+          />
         </View>
       </ScrollView>
     </SafeAreaView>
@@ -240,7 +240,6 @@ const styles = StyleSheet.create({
   title: {
     marginTop: 10,
     textAlign: 'center',
-    color: colors.black,
   },
   divider: {
     width: '60%',
@@ -251,9 +250,6 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   card: {
-    borderWidth: 1,
-    borderColor: colors.black,
-    borderRadius: 12,
     padding: 16,
     backgroundColor: colors.white,
     marginBottom: 14,
@@ -267,11 +263,11 @@ const styles = StyleSheet.create({
     marginBottom: 4,
   },
   avatar: {
-    width: 96,
-    height: 96,
-    borderRadius: 48,
+    width: 150,
+    height: 150,
+    borderRadius: 75,
     borderWidth: 2,
-    borderColor: colors.blue,
+    borderColor: colors.black,
     backgroundColor: colors.white,
   },
   avatarHint: {
@@ -320,6 +316,10 @@ const styles = StyleSheet.create({
   },
   upNextTitle: {
     color: colors.black,
+  },
+  buttonFullWidth: {
+    width: '100%',
+    marginBottom: 10,
   },
   primaryButton: {
     backgroundColor: colors.blue,
