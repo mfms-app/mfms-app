@@ -2,7 +2,6 @@ import React from 'react';
 import { ActivityIndicator, SafeAreaView, StyleSheet, View } from 'react-native';
 import { colors } from '../../styles';
 import useAuthState from './useAuthState';
-import AuthScreen from './AuthScreen';
 import ProfileStackNavigator from './ProfileStackNavigator';
 
 export default function ProfileRootScreen({ navigation }) {
@@ -34,7 +33,7 @@ export default function ProfileRootScreen({ navigation }) {
     );
   }
 
-  return user ? <ProfileStackNavigator user={user} /> : <AuthScreen />;
+  return <ProfileStackNavigator user={user} />
 }
 
 const styles = StyleSheet.create({
