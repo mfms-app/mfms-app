@@ -31,7 +31,7 @@ export default function BottomTabs() {
   return (
     <Tab.Navigator
       tabBarOptions={{ style: styles.tabBarContainer }}
-      initialRouteName={user ? 'Home' : 'Profile'}
+      initialRouteName={'Home'}
     >
       {tabNavigationData.map((item, idx) => (
         <Tab.Screen 
