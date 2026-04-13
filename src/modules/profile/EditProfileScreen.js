@@ -13,6 +13,7 @@ import {
 } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import AppText from '../../components/Text';
+import RNSButton from '../../components/Button';
 import { colors } from '../../styles';
 import { firebaseAuth } from '../../services/firebase';
 import defaultProfileAvatar from './defaultProfileAvatar';
@@ -108,9 +109,6 @@ export default function EditProfileScreen({ user, onDone, omitInScreenHeader = f
           ) : null}
 
           <View style={styles.card}>
-            <AppText variant="caption" style={styles.label}>
-              Photo
-            </AppText>
             <TouchableOpacity
               style={styles.photoPicker}
               onPress={onChangePhoto}
@@ -155,7 +153,7 @@ export default function EditProfileScreen({ user, onDone, omitInScreenHeader = f
               onChangeText={(t) => setProfile((p) => ({ ...p, roleTitle: t }))}
             />
             <Field
-              label="Phone (optional)"
+              label="Phone"
               value={profile.phone}
               onChangeText={(t) => setProfile((p) => ({ ...p, phone: t }))}
             />
@@ -166,15 +164,13 @@ export default function EditProfileScreen({ user, onDone, omitInScreenHeader = f
               multiline
             />
 
-            <TouchableOpacity
-              style={[styles.primaryButton, busy && styles.primaryButtonDisabled]}
-              onPress={save}
-              disabled={busy}
-            >
-              <AppText variant="h3" style={styles.primaryButtonText}>
-                Save
-              </AppText>
-            </TouchableOpacity>
+            <RNSButton
+              caption="Save"
+              bgColor = {colors.blue}
+              primary
+              onPress={busy ? undefined : save}
+              style={[styles.buttonFullWidth, busy && styles.primaryButtonDisabled]}
+            />
 
             <TouchableOpacity style={styles.secondaryButton} onPress={() => onDone?.()} disabled={busy}>
               <AppText variant="caption" style={styles.secondaryButtonText}>
@@ -216,9 +212,6 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   card: {
-    borderWidth: 1,
-    borderColor: colors.black,
-    borderRadius: 12,
     padding: 16,
     backgroundColor: colors.white,
   },
@@ -235,7 +228,7 @@ const styles = StyleSheet.create({
     borderRadius: 60,
     alignSelf: 'center',
     borderWidth: 2,
-    borderColor: colors.blue,
+    borderColor: colors.black,
     overflow: 'hidden',
     marginBottom: 8,
     backgroundColor: colors.white,
@@ -261,7 +254,7 @@ const styles = StyleSheet.create({
   input: {
     borderWidth: 1,
     borderColor: colors.black,
-    borderRadius: 10,
+    borderRadius: 8,
     paddingHorizontal: 12,
     paddingVertical: Platform.OS === 'ios' ? 12 : 10,
     color: colors.black,
@@ -270,12 +263,8 @@ const styles = StyleSheet.create({
     minHeight: 100,
     textAlignVertical: 'top',
   },
-  primaryButton: {
-    backgroundColor: colors.blue,
-    borderRadius: 12,
-    paddingVertical: 12,
-    alignItems: 'center',
-    justifyContent: 'center',
+  buttonFullWidth: {
+    width: '100%',
     marginTop: 10,
   },
   primaryButtonDisabled: { opacity: 0.7 },
