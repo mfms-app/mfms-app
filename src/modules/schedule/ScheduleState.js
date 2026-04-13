@@ -107,7 +107,7 @@ const schedule = [
   {
     id: 8,
     startTime: new Date('2026-04-17T13:10:00').toLocaleString('en-US', { hour: '2-digit', minute: '2-digit' }),
-    endTime: new Date('2026-04-17T14:20:00').toLocaleString('en-US', { hour: '2-digit', minute: '2-digit' }),
+    endTime: new Date('2026-04-17T14:00:00').toLocaleString('en-US', { hour: '2-digit', minute: '2-digit' }),
     speakers: [
       { name: 'Grace Drettman', title: 'Global Partnerships & Media Measurement Lead at Google'},
       { name: 'Olivia Landau', title: 'Founder & CEO of The Clear Cut' },
@@ -124,7 +124,7 @@ const schedule = [
     startTime: new Date('2026-04-17T14:20:00').toLocaleString('en-US', { hour: '2-digit', minute: '2-digit' }),
     endTime: new Date('2026-04-17T15:20:00').toLocaleString('en-US', { hour: '2-digit', minute: '2-digit' }),
     speakers: '',
-    title: 'Networking Hour (starts at 2:20 pm)',
+    title: 'Networking Hour',
     location: '',
     description: 'Networking block; mingle and connect with attendees and speakers.',
   },
@@ -135,7 +135,7 @@ const schedule = [
     speakers: [
       { name: 'Melissa Mash', title: 'Co-founder and CEO of Dagne Dover'},
     ],
-    title: 'Fireside: Equity Through Entrepreneurship: Disrupting The Industry',
+    title: 'Equity Through Entrepreneurship: Disrupting The Industry',
     location: 'Robertson Auditorium',
     type: 'panel',
     description: 'This panel will spotlight how meaningful change happens when intention meets action. The conversation will explore equity as a business imperative, the role of mentorship and access, and how “good deeds” can drive lasting cultural and industry transformation.'
